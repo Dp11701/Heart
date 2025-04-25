@@ -37,10 +37,11 @@ export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element 
                 checkValid(newValueInLbs.toFixed(0), 20, 700, true);
                 break
         }
-    }, [unit, value])
+    }, [unit])
 
     function checkValid(stringNumber: string, minValue: number, maxValue: number, reloadInputText: boolean = false) {
         const number = Number(stringNumber);
+        console.log("CHECK VALID", number, stringNumber)
         if (isFinite(number) && number >= minValue && number <= maxValue) {
             setValue(number)
             setIsValid(true)
@@ -81,6 +82,7 @@ export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element 
             max={maxValue}
             currentValue={inputValue}
             onChangeValue={(newValue: string) => {
+                console.log(newValue)
                 setInputValue(newValue)
                 checkValid(newValue, minValue, maxValue)
             }}

@@ -38,7 +38,7 @@ export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element 
                 checkValid(newValueInCm.toFixed(0), 90, 242, true)
                 break
         }
-    }, [unit, value])
+    }, [unit])
 
     function checkValid(stringNumber: string, minValue: number, maxValue: number, reloadInputText: boolean = false) {
         const number = Number(stringNumber);
