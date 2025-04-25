@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -27,7 +28,18 @@
     <title>React App</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script type="text/javascript">
+    window.AppleID.auth.init({
+      clientId: 'com.zoro4rk.web.test.sid', // Services ID
+      scope: 'name email',
+      redirectURI: 'https://thoroughly-ethical-giraffe.ngrok-free.app/welcome',
+      usePopup: true,
+      response_mode: 'form_post'
+    });
+  </script>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.

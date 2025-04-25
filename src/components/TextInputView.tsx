@@ -1,0 +1,60 @@
+
+import '../styles/TextInputView.css'
+import {useEffect, useRef} from "react";
+
+export interface TextInputViewProps {
+    max: number
+    min: number
+    ideal: number
+    unit: string
+    currentValue: string
+    onChangeValue: (value: string) => void
+}
+
+export function TextInputView(props: TextInputViewProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        inputRef.current?.focus(); // Focus ngay khi component render lần đầu
+    }, []);
+
+    return <div style={{
+        alignContent: 'center',
+        textAlign: 'center',
+        justifyContent: 'center',
+        margin: '0 auto'
+    }}>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+        }}>
+            <div className='text-input-container'>
+                <input
+                    ref={inputRef}
+                    value={props.currentValue}
+                    className='text-input'
+                    placeholder={props.ideal.toString()}
+                    maxLength={5}
+                    onChange={ (e) => {
+                        props.onChangeValue(e.target.value)
+                    }}
+                    onKeyDown={(e) => {
+                        console.log(e.key)
+                        if (e.key === 'Enter') {
+                            (e.target as any).blur?.(); // Bắt buộc mất focus → kích hoạt onBlur
+                        }
+                    }}
+                />
+                <span style={{
+                    fontSize: 24,
+                    fontWeight: 'bold',
+                }}>{props.unit}</span>
+            </div>
+
+            <div style={{
+                height: 1.5,
+                backgroundColor: '#3A79D8',
+            }}></div>
+        </div>
+    </div>
+}

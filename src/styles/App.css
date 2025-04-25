@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+  height: 100dvh;
+  width: 100dvw;
+  background-color: #282c34;
+  overflow: hidden;
+}
+
+.App-No-OverFlow {
+  text-align: center;
+  width: 100dvw;
+  background-color: #282c34;
+  overflow-x: hidden;
+}
+
+.App-Content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.App-Header {
+  background: #282c34;
+  height: 64px;
+  width: 100%;
+  padding: 0
+}
