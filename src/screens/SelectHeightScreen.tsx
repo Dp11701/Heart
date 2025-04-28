@@ -3,39 +3,44 @@ import {SwitcherView} from "../components/SwitcherView";
 import {TextInputView} from "../components/TextInputView";
 import ContinueButton from "../components/ContinueButton";
 import {useEffect, useState} from "react";
+import {SelectInputValueSchema, SelectSchema} from "../models/WelcomeConfig";
 
 export interface SelectHeightScreenProps {
+    config: SelectInputValueSchema
     onContinue: (value: number, unit: string) => void;
 }
 
 export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element {
 
-    const [unit, setUnit] = useState('cm');
+    const [unit, setUnit] = useState(props.config.units[0].unit);
     const [value, setValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(0);
-    const [minValue, setMinValue] = useState(0);
-    const [idealValue, setIdealValue] = useState(0);
+    const [maxValue, setMaxValue] = useState(props.config.units[0].max);
+    const [minValue, setMinValue] = useState(props.config.units[0].min);
+    const [idealValue, setIdealValue] = useState(props.config.units[0].ideal);
     const [isValid, setIsValid] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
+    function currentUnit() {
+        return props.config.units.find(e => e.unit === unit)
+    }
 
     useEffect(() => {
         switch (unit) {
-            case 'ft':
+            case props.config.units[1].unit:
                 let newValueInFt = value*0.0328084
-                setMaxValue(9)
-                setMinValue(4)
-                setIdealValue(5.8)
+                setMaxValue(props.config.units[1].max)
+                setMinValue(props.config.units[1].min)
+                setIdealValue(props.config.units[1].ideal)
                 setInputValue(newValueInFt.toFixed(2))
-                checkValid(newValueInFt.toFixed(2), 4, 12, true)
+                checkValid(newValueInFt.toFixed(2), props.config.units[1].min, props.config.units[1].max, true)
                 break;
-            case 'cm':
-                setMaxValue(260)
-                setMinValue(120)
-                setIdealValue(177)
+            case props.config.units[0].unit:
+                setMaxValue(props.config.units[0].max)
+                setMinValue(props.config.units[0].min)
+                setIdealValue(props.config.units[0].ideal)
                 let newValueInCm = value*30.48
                 setInputValue(newValueInCm.toFixed(0))
-                checkValid(newValueInCm.toFixed(0), 90, 242, true)
+                checkValid(newValueInCm.toFixed(0), props.config.units[0].min, props.config.units[0].max, true)
                 break
         }
     }, [unit])
@@ -62,11 +67,11 @@ export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element 
         width: '100%',
         height: '100%',
     }}>
-        <span className='title-text'>How tall are you?</span>
+        <span className='title-text'>{props.config.title}</span>
 
         <SwitcherView
             currentUnit={unit}
-            units={['cm', 'ft']}
+            units={props.config.units.map(e => e.unit)}
             onSelectUnit={(newUnit) => {
                 setUnit(newUnit);
             }
@@ -96,17 +101,26 @@ export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element 
             alignItems: 'center',
             justifyContent: 'center',
         }}>
-            <span>Please enter a value from</span>
-            <span style={{fontWeight: 'bold'}}>{minValue}{unit}</span>
-            <span>to</span>
-            <span style={{fontWeight: 'bold'}}>{maxValue}{unit}</span>
+            {
+                props.config.note.split('%@')
+                    .map((part, idx) => {
+                        return (
+                            <>
+                                <span>{part}</span>
+                                {idx < 2 && (
+                                    <span style={{fontWeight: 'bold'}}>{[currentUnit()?.min, currentUnit()?.max][idx] + unit} </span>
+                                )}
+                            </>
+                        )
+                    })
+            }
         </div>
 
         <div style={{height: 24}}></div>
 
         <ContinueButton
             disabled={!isValid}
-            text='Continue'
+            text={props.config.continue}
             // additionClassName='button-animate-keyboard'
             onClick={() => {
                 props.onContinue(value, unit)

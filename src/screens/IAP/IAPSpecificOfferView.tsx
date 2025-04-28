@@ -1,8 +1,9 @@
 import icFlashSale from '../../assets/icFlashSale.png'
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {IAPConfig} from "../../models/IAPConfig";
 
-export function IAPSpecificOfferView() {
+export function IAPSpecificOfferView(props: { config: IAPConfig }) {
     const navigate = useNavigate()
     const [timeLeft, setTimeLeft] = useState(600); // 600 giây = 10 phút
 
@@ -39,7 +40,7 @@ export function IAPSpecificOfferView() {
         <span style={{
             color: 'white',
             fontWeight: 500
-        }}>Your  special offer is reserved for only 10 minutes</span>
+        }}>{props.config.yourSpecialOffer}</span>
 
         <span style={{
             fontWeight: 500,

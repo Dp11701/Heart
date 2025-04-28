@@ -2,8 +2,10 @@ import ContinueButton from "../components/ContinueButton";
 import icIdeal2 from '../assets/icIdeal2.png'
 import ColorScale from "../components/ColorScale";
 import {UserInfo} from "../models/UserInfo";
+import {OverviewInfoSchema, WelcomeSchema} from "../models/WelcomeConfig";
 
 export interface IBMIScreenProps {
+    config: OverviewInfoSchema
     userInfo: UserInfo
     onContinue: () => void;
 }
@@ -40,7 +42,7 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
         width: '100%',
         height: '100%',
     }}>
-        <span className='title-text'>Your cardiac risk assessment based on you physical parameters</span>
+        <span className='title-text'>{props.config.title}</span>
 
         <div style={{
             display: 'flex',
@@ -53,9 +55,9 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
         }}>
             <span style={{
                 fontWeight: 500
-            }}>Your 10-year risk of a heart-attack</span>
+            }}>{props.config.tenYears}</span>
 
-            <ColorScale />
+            <ColorScale label={props.config.normal} />
 
             <div style={{
                 backgroundColor: '#ACACAC',
@@ -67,10 +69,10 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
                 flexDirection: 'row',
                 justifyContent: 'space-between'
             }}>
-                { infoComponents("Weight", `${props.userInfo.weight?.toString() || ""} ${props.userInfo.weightUnit?.toString() || "kg"}`)}
-                { infoComponents("Height", `${props.userInfo.height?.toString() || ""} ${props.userInfo.heightUnit?.toString() || "cm"}`)}
-                { infoComponents("Age", props.userInfo.age?.toString() || "")}
-                { infoComponents("Gender", props.userInfo.gender || "")}
+                { infoComponents(props.config.weight, `${props.userInfo.weight?.toString() || ""} ${props.userInfo.weightUnit?.toString() || "kg"}`)}
+                { infoComponents(props.config.height, `${props.userInfo.height?.toString() || ""} ${props.userInfo.heightUnit?.toString() || "cm"}`)}
+                { infoComponents(props.config.age, props.userInfo.age?.toString() || "")}
+                { infoComponents(props.config.gender, props.userInfo.gender || "")}
             </div>
         </div>
 
@@ -93,7 +95,7 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
                     fontSize: 16,
                     fontWeight: 'bold',
                     justifyContent: 'center'
-                }}>80% of iCardiac' users are like you</span>
+                }}>{props.config["80LikeYou"]}</span>
             </div>
 
             <span style={{
@@ -101,12 +103,12 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
                 color: '#7D8296',
                 fontSize: 14,
                 lineHeight: '25px'
-            }}>Remember maintaining healthy habits, including a balanced diet and exercise are important to support your overall health</span>
+            }}>{props.config.description}</span>
         </div>
 
         <ContinueButton
             additionClassName='button-animate-keyboard'
-            text='Continue'
+            text={props.config.continue}
             onClick={ () => { props.onContinue() }}
         />
     </div>

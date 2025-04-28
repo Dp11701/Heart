@@ -5,8 +5,10 @@ import icAnalyzing3 from '../assets/icAnalyzing3.png'
 import '../styles/AnalyzingScreen.css'
 import '../styles/Common.css'
 import {useEffect, useState} from "react";
+import {AnalyzingSchema} from "../models/WelcomeConfig";
 
 export interface AnalyzingScreenProps {
+    config: AnalyzingSchema
     onContinue: () => void
 }
 
@@ -14,17 +16,17 @@ export function AnalyzingScreen(props: AnalyzingScreenProps) {
 
     const ITEMS = [
         {
-            title: 'Building your customized health plan using your answers',
+            title: props.config.options[0],
             color: '#3A79D8',
             icon: icAnalyzing1
         },
         {
-            title: 'Creating advice for mental wellness.',
+            title: props.config.options[1],
             color: '#FF8972',
             icon: icAnalyzing2
         },
         {
-            title: 'Adjusting our measurement algorithms to fit your data.',
+            title: props.config.options[2],
             color: '#A985E5',
             icon: icAnalyzing3
         }
@@ -141,7 +143,7 @@ export function AnalyzingScreen(props: AnalyzingScreenProps) {
         gap: 12
     }}>
         <div style={{height: 26}}></div>
-        <span className='title-text'>Analyzing your health status</span>
+        <span className='title-text'>{props.config.title}</span>
         {
             ITEMS.map((item, idx) => {
                 return itemView(item, idx)

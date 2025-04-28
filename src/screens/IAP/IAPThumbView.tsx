@@ -1,6 +1,7 @@
 import icIAPThumbnail from '../../assets/icIAPThumbnail.png'
+import {IAPConfig} from "../../models/IAPConfig";
 
-export function IAPThumbView() {
+export function IAPThumbView(props: { config: IAPConfig }) {
     return <div style={{
         position: 'relative',
         display: 'flex',
@@ -27,12 +28,12 @@ export function IAPThumbView() {
             color: 'black',
             fontSize: 24,
             fontWeight: 'bold',
-            zIndex: 1,
+            // zIndex: 1,
             margin: 16,
             textAlign: 'center',
             lineHeight: 1.5,
             bottom: 16
-        }}>Check in with your body</span>
+        }}>{props.config.checkWithBody}</span>
 
         <span style={{
             position: 'absolute',
@@ -40,13 +41,11 @@ export function IAPThumbView() {
             color: 'black',
             fontSize: 20,
             fontWeight: 'bold',
-            zIndex: 1,
+            // zIndex: 1,
             margin: 16,
             textAlign: 'center',
             lineHeight: 1.5
-        }}>For a limited time, your Heart Health plan is saved in iCardiac Premium
+        }}>{props.config.thumbTitle}
         </span>
-
-
     </div>
 }

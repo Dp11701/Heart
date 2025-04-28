@@ -1,0 +1,168 @@
+{
+  "WELCOME": {
+    "trustedBy": "신뢰받는",
+    "1M+": "100만+ 사용자",
+    "welcomeTo": "환영합니다 ",
+    "appName": "iCardiac",
+    "features": [
+      "심장 건강 관리",
+      "혈압 보고서 접근",
+      "스트레스 수준 개선"
+    ],
+    "continueTitle": "계속",
+    "advice": "이것은 진단이나 의료 조언이 아닙니다",
+    "privacyPolicy": "개인정보 보호정책",
+    "termOfUse": "이용 약관",
+    "subscriptionTerms": "구독 약관",
+    "privacyPolicyLink": "https://begamob.com/cast-policy.html",
+    "termOfUseLink": "https://begamob.com/cast-policy.html",
+    "subscriptionTermsLink": "https://begamob.com/cast-policy.html"
+  },
+  "SELECT_GENDER": {
+    "title": "당신의 성별은 무엇입니까?",
+    "description": "성별은 심혈관 건강에 영향을 미칩니다. 귀하에게 맞춘 결과를 제공하는 데 도움이 됩니다.",
+    "male": "남성",
+    "female": "여성",
+    "preferNotToSay": "말하고 싶지 않음"
+  },
+  "SELECT_AGE": {
+    "title": "당신의 나이는?",
+    "description": "이는 귀하의 건강 상태를 정확히 판단하는 데 도움이 됩니다",
+    "note": "%@에서 %@까지의 값을 입력하세요",
+    "continue": "계속",
+    "units": [
+      {
+        "unit": "세",
+        "min": 20,
+        "max": 95,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_WEIGHT": {
+    "title": "현재 체중은 얼마입니까?",
+    "note": "%@에서 %@까지의 값을 입력하세요",
+    "continue": "계속",
+    "units": [
+      {
+        "unit": "kg",
+        "min": 10,
+        "max": 300,
+        "ideal": 72
+      },
+      {
+        "unit": "lbs",
+        "min": 20,
+        "max": 700,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_HEIGHT": {
+    "title": "당신의 키는 얼마입니까?",
+    "note": "%@에서 %@까지의 값을 입력하세요",
+    "continue": "계속",
+    "units": [
+      {
+        "unit": "cm",
+        "min": 120,
+        "max": 260,
+        "ideal": 30
+      },
+      {
+        "unit": "ft",
+        "min": 4,
+        "max": 9,
+        "ideal": 5.8
+      }
+    ]
+  },
+  "OVERVIEW_INFO": {
+    "title": "당신의 신체 정보를 기반으로 한 심장 질환 위험 평가",
+    "tenYears": "향후 10년간 심장마비 위험",
+    "normal": "정상",
+    "weight": "체중",
+    "height": "키",
+    "age": "나이",
+    "gender": "성별",
+    "80LikeYou": "iCardiac 사용자 중 80%가 당신과 같습니다",
+    "description": "균형 잡힌 식단과 운동을 포함한 건강한 습관을 유지하는 것은 전반적인 건강을 지원하는 데 중요합니다",
+    "continue": "계속"
+  },
+  "SELECT_CHOLESTEROL": {
+    "title": "고콜레스테롤이 있습니까?",
+    "options": [
+      "예", "아니요", "모르겠습니다"
+    ]
+  },
+  "SELECT_BLOOD_PRESSURE": {
+    "title": "당신의 일반적인 혈압 수치는 얼마입니까?",
+    "options": [
+      "120 미만 / 80 미만",
+      "120-129 / 80 미만",
+      "130-139 / 80-89",
+      "140 이상 / 90 이상",
+      "모르겠습니다"
+    ]
+  },
+  "SELECT_HYPERTENSION": {
+    "title": "고혈압이 있습니까?",
+    "options": [
+      "예", "아니요", "모르겠습니다"
+    ]
+  },
+  "SELECT_HIGH_BLOOD_PRESSURE": {
+    "title": "고혈압 약을 복용하고 있습니까?",
+    "options": [
+      "예", "아니요"
+    ]
+  },
+  "SELECT_ACTIVITY_LEVEL": {
+    "title": "당신의 신체 활동 수준은?",
+    "options": [
+      "거의 운동하지 않음",
+      "가벼운 활동 (주 1-2회)",
+      "중간 활동 (주 3-5회)",
+      "매우 활동적 (주 5회 이상)"
+    ]
+  },
+  "SELECT_SLEEP": {
+    "title": "하루에 몇 시간 자나요?",
+    "options": [
+      "5시간 미만",
+      "5-7시간",
+      "7시간 이상"
+    ]
+  },
+  "SELECT_SMOKING_HISTORY": {
+    "title": "담배를 피우거나 피운 적이 있습니까?",
+    "options": [
+      "담배를 피웁니다",
+      "전 흡연자입니다",
+      "한 번도 피운 적 없습니다"
+    ]
+  },
+  "SELECT_ALCOHOL": {
+    "title": "술을 마십니까?",
+    "options": [
+      "정기적으로 마십니다",
+      "가끔 마십니다",
+      "예전에 정기적으로 마셨습니다",
+      "마시지 않습니다"
+    ]
+  },
+  "ANALYZING": {
+    "title": "건강 상태 분석 중",
+    "options": [
+      "답변을 바탕으로 맞춤형 건강 계획 생성 중",
+      "정신 건강을 위한 조언 생성 중.",
+      "데이터에 맞게 측정 알고리즘 조정 중."
+    ]
+  },
+  "SEND_EMAIL": {
+    "title": "개인 맞춤형 건강 계획을 받기 위해 이메일을 입력하세요",
+    "description": "개인 정보를 처리할 때 우리는 귀하의 프라이버시를 존중하며 %@를 엄격히 준수합니다. 연락처 정보를 포함하여 이 양식을 제출하면 저희로부터 연락을 받는 데 동의하게 됩니다",
+    "privacyPolicy": "개인정보 보호정책",
+    "submit": "제출"
+  }
+}

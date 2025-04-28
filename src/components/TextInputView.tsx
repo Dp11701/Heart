@@ -1,6 +1,7 @@
 
 import '../styles/TextInputView.css'
-import {useEffect, useRef} from "react";
+import '../styles/SelectAgeScreen.css'
+import {CSSProperties, useEffect, useRef} from "react";
 
 export interface TextInputViewProps {
     max: number
@@ -9,14 +10,19 @@ export interface TextInputViewProps {
     unit: string
     currentValue: string
     onChangeValue: (value: string) => void
+    textInputStyles?: CSSProperties
+    maxLength?: number
 }
 
 export function TextInputView(props: TextInputViewProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        inputRef.current?.focus(); // Focus ngay khi component render lần đầu
-    }, []);
+        inputRef.current?.focus();
+        setTimeout(() => {
+            inputRef.current?.focus();
+        })
+    }, [inputRef]);
 
     return <div style={{
         alignContent: 'center',
@@ -30,11 +36,13 @@ export function TextInputView(props: TextInputViewProps) {
         }}>
             <div className='text-input-container'>
                 <input
-                    ref={inputRef}
+                    // ref={inputRef}
+                    autoFocus={true}
                     value={props.currentValue}
-                    className='text-input'
+                    className={`text-input`}
+                    style={props.textInputStyles ?? {}}
                     placeholder={props.ideal.toString()}
-                    maxLength={5}
+                    maxLength={props.maxLength ?? 5}
                     onChange={ (e) => {
                         props.onChangeValue(e.target.value)
                     }}

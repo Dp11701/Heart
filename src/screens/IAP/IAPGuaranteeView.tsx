@@ -1,18 +1,22 @@
-import icMoneyBack from  '../../assets/icMoneyBack.png'
+import icMoneyBack from  '../../assets/icMoneyBack.png';
+import icPaymentGuranteed from '../../assets/icPaymentGuranteed.png';
+import {IAPConfig} from "../../models/IAPConfig";
 
-export function IAPGuaranteeView() {
+export function IAPGuaranteeView(props: { config: IAPConfig }) {
 
     return <div style={{
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
         marginTop: 16,
         gap: 16
     }}>
+        <img src={icPaymentGuranteed} alt={''} style={{ width: 'calc(100% - 48px)', height: 'auto' }}/>
         <span style={{
             whiteSpace: 'pre-line',
             fontSize: 28,
             fontWeight: 'bold'
-        }}>{`30 Days Money-Back\nGuarantee`}</span>
+        }}>{props.config["30Days"]}</span>
 
         <div style={{
             display: 'flex',
@@ -26,7 +30,7 @@ export function IAPGuaranteeView() {
                 color: '#666666',
                 textAlign: 'start',
                 lineHeight: 1.8
-            }}>We believe that our plan may work for you and you'll get visiable result in 4 weeks!</span>
+            }}>{props.config.weBelieve}</span>
             <div style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -37,25 +41,25 @@ export function IAPGuaranteeView() {
                     color: '#666666',
                     textAlign: 'start',
                     lineHeight: 1.8
-                }}>We are even ready to completely refund you within 30 days after purchase if you don't get visiable results and can demonstrate that you have followed our plan.</span>
+                }}>{props.config.weBelieve2}</span>
                 <img src={icMoneyBack} alt={''} style={{ width: 60, height: 60 }}/>
             </div>
         </div>
 
         <span style={{textAlign: 'start', margin: '0px 24px', lineHeight: 1.8, whiteSpace: 'pre-line'}}>
-            <span style={{fontWeight: 'bold'}}>Your information is safe</span>
-            {`\nWe won’t sell or rent your personal contact information for any marketing purposes whatsoever.\n`}
-            <span style={{fontWeight: 'bold'}}>Secure checkout</span>
-            {`\nAll information is encrypted and transmitted without risk using a Secure Sockets Layer protocol.\n`}
-            <span style={{fontWeight: 'bold'}}>Need help?</span>
-            {`\nSend us an email: feedback@begamob.com\n\n`}
+            <span style={{fontWeight: 'bold'}}>{props.config.yourInfoSafe}</span>
+            {`\n${props.config.yourInfoSafe2}\n`}
+            <span style={{fontWeight: 'bold'}}>{props.config.secureCheckout}</span>
+            {`\n${props.config.secureCheckout2}\n`}
+            <span style={{fontWeight: 'bold'}}>{props.config.needHelp}</span>
+            {`\n${props.config.needHelp2}feedback@begamob.com\n\n`}
             <span style={{
                 lineHeight: 1,
                 textAlign: 'start',
                 fontSize: 12,
                 fontStyle: 'italic',
                 color: '#979797',
-            }}>PLEASE NOTE: After your introductory offer, unless you cancel online before the end of then-current period, your subscription will renew automatically and you will be charged $6.99, the full not discounted price each week before you cancel. Subscriptions renew automatically at the end of each period unless you cancel online. If you are unsure how to cancel, visit our Subscription Terms. Prepayment of total plan cost required. You will need an iOS mobile phone to access the full version of the product. You may want to take a screenshot of this information and save it.</span>
+            }}>{props.config.pleaseNote}</span>
         </span>
     </div>
 }

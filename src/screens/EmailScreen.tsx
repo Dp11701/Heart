@@ -4,8 +4,10 @@ import '../styles/AnalyzingScreen.css'
 import '../styles/Common.css'
 import ContinueButton from "../components/ContinueButton";
 import {useEffect, useRef, useState} from "react";
+import {SendEmailSchema} from "../models/WelcomeConfig";
 
 export interface EmailScreenProps {
+    config: SendEmailSchema
     onContinue: (email: string) => void
 }
 
@@ -34,6 +36,24 @@ export function EmailScreen(props: EmailScreenProps) {
         props.onContinue(email)
     };
 
+    const link = (
+        <a
+            style={{
+                fontWeight: 'bold',
+                color: '#979797',
+                fontSize: 12,
+            }}
+            href='https://begamob.com/cast-policy.html'
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            {props.config.privacyPolicy}
+        </a>
+    );
+
+    const parts = props.config.description.split('%@');
+
+
     return <div style={{
         display: "flex",
         flexDirection: "column",
@@ -43,7 +63,7 @@ export function EmailScreen(props: EmailScreenProps) {
         gap: 24
     }}>
         <div style={{height: 26}}></div>
-        <span className='title-text'>Please enter your email to get your personalized health plan</span>
+        <span className='title-text'>{props.config.title}</span>
         <div style={{
             display: 'flex',
             flexDirection: 'row',
@@ -57,7 +77,7 @@ export function EmailScreen(props: EmailScreenProps) {
         }}>
             <img src={icMail} alt={''} style={{width: 24, height: 24}}/>
             <input
-                ref={inputRef}
+                autoFocus={true}
                 style={{
                     border: 'none',
                     outline: 'none',
@@ -83,13 +103,11 @@ export function EmailScreen(props: EmailScreenProps) {
             color: '#979797',
             margin: '0 24px'
         }}>
-            We respect your privacy and strictly adhere to our <a style={{
-            fontWeight: 'bold',
-            color: '#979797',
-            fontSize: 12,
-        }} href='https://google.com' target="_blank" rel="noopener noreferrer">Privacy Policy</a> when processing with your personal data. By submitting this form with contact information, you agree to receive communications from us
+            {parts[0]}
+            {link}
+            {parts[1]}
         </span>
 
-        <ContinueButton disabled={!canSubmit} text={"Submit"} onClick={() => handleSubmit()}/>
+        <ContinueButton disabled={!canSubmit} text={props.config.submit} onClick={() => handleSubmit()}/>
     </div>
 }

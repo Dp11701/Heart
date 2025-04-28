@@ -3,41 +3,47 @@ import {SwitcherView} from "../components/SwitcherView";
 import {TextInputView} from "../components/TextInputView";
 import ContinueButton from "../components/ContinueButton";
 import {useEffect, useState} from "react";
+import {SelectInputValueSchema} from "../models/WelcomeConfig";
 
 export interface SelectWeightScreenProps {
+    config: SelectInputValueSchema
     onContinue: (value: number, unit: string) => void;
 }
 
 export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element {
 
-    const [unit, setUnit] = useState('kg');
+    const [unit, setUnit] = useState(props.config.units[0].unit);
     const [value, setValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(0);
-    const [minValue, setMinValue] = useState(0);
-    const [idealValue, setIdealValue] = useState(0);
+    const [maxValue, setMaxValue] = useState(props.config.units[0].max);
+    const [minValue, setMinValue] = useState(props.config.units[0].min);
+    const [idealValue, setIdealValue] = useState(props.config.units[0].ideal);
     const [isValid, setIsValid] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
     useEffect(() => {
         switch (unit) {
-            case 'kg':
+            case props.config.units[0].unit:
                 let newValueInKg = value*2.20462;
-                setMaxValue(300);
-                setMinValue(10);
-                setIdealValue(72);
+                setMaxValue(props.config.units[0].max);
+                setMinValue(props.config.units[0].min);
+                setIdealValue(props.config.units[0].ideal);
                 setInputValue(newValueInKg.toFixed(0));
-                checkValid(newValueInKg.toFixed(0), 10, 300, true);
+                checkValid(newValueInKg.toFixed(0), props.config.units[0].min, props.config.units[0].max, true);
                 break;
-            case 'lbs':
-                setMaxValue(700);
-                setMinValue(20);
-                setIdealValue(160);
+            case props.config.units[1].unit:
+                setMaxValue(props.config.units[1].max);
+                setMinValue(props.config.units[1].min);
+                setIdealValue(props.config.units[1].ideal);
                 let newValueInLbs = value * 0.453592;
                 setInputValue(newValueInLbs.toFixed(0));
-                checkValid(newValueInLbs.toFixed(0), 20, 700, true);
+                checkValid(newValueInLbs.toFixed(0), props.config.units[1].min, props.config.units[1].max, true);
                 break
         }
     }, [unit])
+
+    function currentUnit() {
+        return props.config.units.find(e => e.unit === unit)
+    }
 
     function checkValid(stringNumber: string, minValue: number, maxValue: number, reloadInputText: boolean = false) {
         const number = Number(stringNumber);
@@ -62,11 +68,11 @@ export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element 
         width: '100%',
         height: '100%',
     }}>
-        <span className='title-text'>What is your current weight?</span>
+        <span className='title-text'>{props.config.title}</span>
 
         <SwitcherView
             currentUnit={unit}
-            units={['kg', 'lbs']}
+            units={props.config.units.map(e => e.unit)}
             onSelectUnit={(newUnit) => {
                 setUnit(newUnit);
             }
@@ -97,17 +103,26 @@ export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element 
             alignItems: 'center',
             justifyContent: 'center',
         }}>
-            <span>Please enter a value from</span>
-            <span style={{fontWeight: 'bold'}}>{minValue}{unit}</span>
-            <span>to</span>
-            <span style={{fontWeight: 'bold'}}>{maxValue}{unit}</span>
+            {
+                props.config.note.split('%@')
+                    .map((part, idx) => {
+                        return (
+                            <>
+                                <span>{part}</span>
+                                {idx < 2 && (
+                                    <span style={{fontWeight: 'bold'}}>{[currentUnit()?.min, currentUnit()?.max][idx] + unit} </span>
+                                )}
+                            </>
+                        )
+                    })
+            }
         </div>
 
         <div style={{height: 24}}></div>
 
         <ContinueButton
             disabled={!isValid}
-            text='Continue'
+            text={props.config.continue}
             // additionClassName='button-animate-keyboard'
             onClick={() => {
                 props.onContinue(value, unit)

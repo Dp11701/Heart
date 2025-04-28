@@ -3,6 +3,8 @@ import {useState} from "react";
 import {IAPPackModel} from "../../models/IAPPackModel";
 import {useStripe} from "@stripe/react-stripe-js";
 import {useNavigate} from "react-router-dom";
+import {IAPPaymentButton} from "./IAPPaymentButton";
+import {IAPConfig} from "../../models/IAPConfig";
 
 interface IAPPricesViewProps {
     pack: IAPPackModel
@@ -57,43 +59,11 @@ function IAPPackView(props: IAPPricesViewProps) {
 }
 
 
-export function IAPPricesView() {
+export function IAPPricesView(props: { config: IAPConfig }) {
 
-    const stripe =  useStripe()
     const [selectedPackIndex, setSelectedPackIndex] = useState(0)
+    const [isNavigating, setIsisNavigating] = useState(false)
     const navigate = useNavigate()
-
-    async function handlePurchase() {
-        if (!stripe) return;
-        const response = await fetch("https://thuyetln.begamob.com/create-checkout-session", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Backend response:", data); // Debug the response
-
-        if (!data.sessionId) {
-            throw new Error("No sessionId returned from backend");
-        }
-
-        const { error } = await stripe.redirectToCheckout({
-            sessionId: data.sessionId,
-
-        });
-        if (error) {
-            console.error("Stripe redirect error:", error.message);
-            console.log(error);
-        } else {
-
-        }
-    }
 
     return <div style={{
         display: 'flex',
@@ -111,7 +81,7 @@ export function IAPPricesView() {
             alignItems: 'center',
             justifyContent: 'space-between'
         }}>
-            <span style={{fontWeight: 500, color: '#7D8296'}}> Enable Free Trial</span>
+            <span style={{fontWeight: 500, color: '#7D8296'}}>{props.config.enableFreeTrial}</span>
 
             <ReactSwitch
                 checked={selectedPackIndex === 0}
@@ -130,9 +100,9 @@ export function IAPPricesView() {
                 setSelectedPackIndex(0)
             }}
             pack={{
-                title: "YEARLY",
-                priceTitle: "8,6 $\nper week",
-                subTitle: "Just $99.99 per year"
+                title: props.config.title1,
+                priceTitle: props.config.price1,
+                subTitle: props.config.subtitle1,
             }}/>
 
         <IAPPackView
@@ -141,32 +111,11 @@ export function IAPPricesView() {
                 setSelectedPackIndex(1)
             }}
             pack={{
-                title: "WEEKLY",
-                priceTitle: "Then 12$\nper week",
-                subTitle: ""
+                title: props.config.title2,
+                priceTitle: props.config.price2,
+                subTitle: props.config.subtitle2
             }}/>
-
-        <button
-            style={{
-                width: '100%',
-                display: 'flex',
-                height: 60,
-                backgroundColor: '#FF3D60',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 16,
-                border: 'none'
-            }}
-            onClick={ handlePurchase }
-        >
-                <span style={{
-                    fontWeight: 'bold',
-                    fontSize: 20,
-                    color: 'white'
-                }}>START 3-DAY TRIAL</span>
-        </button>
-
-
+        <IAPPaymentButton config={props.config}/>
         <span style={{
             fontSize: 15,
             whiteSpace: 'pre-line',

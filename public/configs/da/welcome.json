@@ -1,0 +1,168 @@
+{
+  "WELCOME": {
+    "trustedBy": "Betroet af",
+    "1M+": "1M+ brugere",
+    "welcomeTo": "Velkommen til ",
+    "appName": "iCardiac",
+    "features": [
+      "Kontrollér din hjerte sundhed",
+      "Få adgang til blodtryksrapport",
+      "Forbedr dit stressniveau"
+    ],
+    "continueTitle": "Fortsæt",
+    "advice": "Dette udgør ikke en diagnose eller medicinsk rådgivning",
+    "privacyPolicy": "Privatlivspolitik",
+    "termOfUse": "Brugsbetingelser",
+    "subscriptionTerms": "Abonnementsbetingelser",
+    "privacyPolicyLink": "https://begamob.com/cast-policy.html",
+    "termOfUseLink": "https://begamob.com/cast-policy.html",
+    "subscriptionTermsLink": "https://begamob.com/cast-policy.html"
+  },
+  "SELECT_GENDER": {
+    "title": "Hvad er dit køn",
+    "description": "Køn påvirker din hjerte-kar-sundhed. Det hjælper os med at tilpasse dine resultater.",
+    "male": "Mand",
+    "female": "Kvinde",
+    "preferNotToSay": "Foretrækker ikke at sige"
+  },
+  "SELECT_AGE": {
+    "title": "Hvad er din alder",
+    "description": "Dette vil hjælpe os med at bestemme din sundhedstilstand korrekt",
+    "note": "Indtast venligst en værdi fra %@ til %@",
+    "continue": "Fortsæt",
+    "units": [
+      {
+        "unit": "år",
+        "min": 20,
+        "max": 95,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_WEIGHT": {
+    "title": "Hvad er din nuværende vægt?",
+    "note": "Indtast venligst en værdi fra %@ til %@",
+    "continue": "Fortsæt",
+    "units": [
+      {
+        "unit": "kg",
+        "min": 10,
+        "max": 300,
+        "ideal": 72
+      },
+      {
+        "unit": "lbs",
+        "min": 20,
+        "max": 700,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_HEIGHT": {
+    "title": "Hvor høj er du?",
+    "note": "Indtast venligst en værdi fra %@ til %@",
+    "continue": "Fortsæt",
+    "units": [
+      {
+        "unit": "cm",
+        "min": 120,
+        "max": 260,
+        "ideal": 30
+      },
+      {
+        "unit": "ft",
+        "min": 4,
+        "max": 9,
+        "ideal": 5.8
+      }
+    ]
+  },
+  "OVERVIEW_INFO": {
+    "title": "Din hjerte-risikovurdering baseret på dine fysiske parametre",
+    "tenYears": "Din 10-årige risiko for et hjerteanfald",
+    "normal": "Normal",
+    "weight": "Vægt",
+    "height": "Højde",
+    "age": "Alder",
+    "gender": "Køn",
+    "80LikeYou": "80% af iCardiac's brugere er som dig",
+    "description": "Husk at opretholde sunde vaner, herunder en afbalanceret kost og motion, er vigtigt for at støtte dit generelle helbred",
+    "continue": "Fortsæt"
+  },
+  "SELECT_CHOLESTEROL": {
+    "title": "Har du højt kolesterol?",
+    "options": [
+      "Ja", "Nej", "Jeg ved det ikke"
+    ]
+  },
+  "SELECT_BLOOD_PRESSURE": {
+    "title": "Hvad er din typiske blodtryksmåling?",
+    "options": [
+      "Mindre end 120/Mindre end 80",
+      "120-129/mindre end 80",
+      "130-139/80-89",
+      "140 eller højere/90 eller højere",
+      "Jeg ved det ikke"
+    ]
+  },
+  "SELECT_HYPERTENSION": {
+    "title": "Har du forhøjet blodtryk?",
+    "options": [
+      "Ja", "Nej", "Jeg ved det ikke"
+    ]
+  },
+  "SELECT_HIGH_BLOOD_PRESSURE": {
+    "title": "Tager du medicin for højt blodtryk?",
+    "options": [
+      "Ja", "Nej"
+    ]
+  },
+  "SELECT_ACTIVITY_LEVEL": {
+    "title": "Hvad er dit fysiske aktivitetsniveau?",
+    "options": [
+      "Stillesiddende (lidt eller ingen motion)",
+      "Let aktivitet (1-2 gange om ugen)",
+      "Moderat aktivitet (3-5 gange om ugen)",
+      "Meget aktiv (mere end 5 gange om ugen)"
+    ]
+  },
+  "SELECT_SLEEP": {
+    "title": "Hvor meget sover du dagligt?",
+    "options": [
+      "Mindre end 5 timer",
+      "5-7 timer",
+      "Mere end 7 timer"
+    ]
+  },
+  "SELECT_SMOKING_HISTORY": {
+    "title": "Ryger du eller har du en rygehistorik?",
+    "options": [
+      "Jeg ryger tobak",
+      "Jeg er tidligere ryger",
+      "Jeg har aldrig røget"
+    ]
+  },
+  "SELECT_ALCOHOL": {
+    "title": "Drikker du alkohol?",
+    "options": [
+      "Regelmæssigt",
+      "Lejlighedsvis",
+      "Tidligere regelmæssigt",
+      "Jeg drikker ikke"
+    ]
+  },
+  "ANALYZING": {
+    "title": "Analyserer din helbredstilstand",
+    "options": [
+      "Opbygger din tilpassede sundhedsplan ved hjælp af dine svar",
+      "Opretter rådgivning for mental velvære.",
+      "Justering af vores målealgoritmer til at passe dine data."
+    ]
+  },
+  "SEND_EMAIL": {
+    "title": "Indtast venligst din e-mail for at få din personlige sundhedsplan",
+    "description": "Vi respekterer dit privatliv og overholder strikt vores %@ ved behandling af dine personlige data. Ved at indsende denne formular med kontaktoplysninger, accepterer du at modtage kommunikation fra os",
+    "privacyPolicy": "Privatlivspolitik",
+    "submit": "Send"
+  }
+}

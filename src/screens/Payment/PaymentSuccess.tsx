@@ -1,10 +1,38 @@
 import icAppIcon from '../../assets/icAppIconPayment.png'
-import {useEffect} from "react";
+import icAppleLogo from '../../assets/icAppleLogo.png'
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import defaultConfig from '../../configs/result.json'
+import {ResultSuccessConfig} from "../../models/ResultSuccessConfig";
 
 export function PaymentSuccess() {
 
+    const [config, setConfig] = useState(ResultSuccessConfig.parse(defaultConfig))
     const navigate = useNavigate()
+
+    useEffect(() => {
+        switchConfigs().then()
+    }, [])
+
+    async function switchConfigs() {
+        const locale = localStorage.getItem("languageCode")
+        console.log(locale)
+        if (locale) {
+            try {
+                const response = await fetch(`/configs/${locale}/result.json`)
+                const json = await response.json();
+                const parsed = ResultSuccessConfig.parse(json);
+                setConfig(parsed);
+            } catch {
+                localStorage.removeItem("languageCode");
+                setConfig(defaultConfig);
+            }
+        } else {
+            localStorage.removeItem("languageCode");
+            setConfig(defaultConfig);
+        }
+    }
+
 
     async function handleSignInWithApple() {
         try {
@@ -20,7 +48,6 @@ export function PaymentSuccess() {
 
         }
     }
-
 
 
     return <div style={{
@@ -54,7 +81,7 @@ export function PaymentSuccess() {
                 fontWeight: 'bold',
                 whiteSpace: 'pre-line',
                 lineHeight: 1.5
-            }}>{`One more step to\nfinish your registration`}</span>
+            }}>{config.paymentSuccessTitle}</span>
 
         </div>
 
@@ -70,7 +97,8 @@ export function PaymentSuccess() {
                     gap: 16,
                     padding: '0px 16px'
                 }}>
-            <span style={{fontSize: 32, color: 'white'}}></span> <span
-            style={{fontSize: 18, fontWeight: 600, color: 'white'}}>Sign in With Apple</span></button>
+            <img src={icAppleLogo} alt={''} style={{ width: 32, height: 32 }}/>
+            <span style={{fontSize: 18, fontWeight: 600, color: 'white'}}>{config.loginWithApple}</span>
+    </button>
     </div>
 }

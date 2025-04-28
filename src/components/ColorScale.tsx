@@ -2,7 +2,7 @@ import React from 'react';
 import icTriangle from '../assets/icTriangle.png'
 import '../styles/ColorScale.css'
 
-const ColorScale = ({ index = 12, label = "Normal" }) => {
+const ColorScale = ({  index = 12, label = "Normal" }) => {
 
     const colors = [
         ...Array(6).fill('#629CF3'),

@@ -1,4 +1,4 @@
-import {z} from "zod";
+import {string, z} from "zod";
 import {EnumGender} from "./EnumGender";
 
 const TransformOptionalString = z.string().optional().transform(e => {
@@ -12,10 +12,7 @@ const TransformOptionalNumber = z.number().optional().transform(e => {
 })
 
 export const UserInfo = z.object({
-    gender: EnumGender.nullable().optional().transform(e => {
-        if (e === undefined || e === null) return null
-        return e
-    }),
+    gender: TransformOptionalString,
     age: TransformOptionalNumber,
     height: TransformOptionalNumber,
     heightUnit: TransformOptionalString,

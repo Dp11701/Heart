@@ -1,0 +1,168 @@
+{
+  "WELCOME": {
+    "trustedBy": "Được tin tưởng bởi",
+    "1M+": "Hơn 1 triệu người dùng",
+    "welcomeTo": "Chào mừng đến với ",
+    "appName": "iCardiac",
+    "features": [
+      "Kiểm soát sức khỏe tim mạch của bạn",
+      "Truy cập báo cáo huyết áp",
+      "Cải thiện mức độ căng thẳng của bạn"
+    ],
+    "continueTitle": "Tiếp tục",
+    "advice": "Đây không phải là chẩn đoán hay lời khuyên y tế",
+    "privacyPolicy": "Chính sách bảo mật",
+    "termOfUse": "Điều khoản sử dụng",
+    "subscriptionTerms": "Điều khoản đăng ký",
+    "privacyPolicyLink": "https://begamob.com/cast-policy.html",
+    "termOfUseLink": "https://begamob.com/cast-policy.html",
+    "subscriptionTermsLink": "https://begamob.com/cast-policy.html"
+  },
+  "SELECT_GENDER": {
+    "title": "Giới tính của bạn là gì",
+    "description": "Giới tính ảnh hưởng đến sức khỏe tim mạch. Điều này giúp chúng tôi cá nhân hóa kết quả cho bạn.",
+    "male": "Nam",
+    "female": "Nữ",
+    "preferNotToSay": "Không muốn tiết lộ"
+  },
+  "SELECT_AGE": {
+    "title": "Tuổi của bạn là bao nhiêu",
+    "description": "Điều này giúp chúng tôi xác định đúng tình trạng sức khỏe của bạn",
+    "note": "Vui lòng nhập giá trị từ %@ đến %@",
+    "continue": "Tiếp tục",
+    "units": [
+      {
+        "unit": "năm",
+        "min": 20,
+        "max": 95,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_WEIGHT": {
+    "title": "Cân nặng hiện tại của bạn là bao nhiêu?",
+    "note": "Vui lòng nhập giá trị từ %@ đến %@",
+    "continue": "Tiếp tục",
+    "units": [
+      {
+        "unit": "kg",
+        "min": 10,
+        "max": 300,
+        "ideal": 72
+      },
+      {
+        "unit": "lbs",
+        "min": 20,
+        "max": 700,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_HEIGHT": {
+    "title": "Chiều cao của bạn là bao nhiêu?",
+    "note": "Vui lòng nhập giá trị từ %@ đến %@",
+    "continue": "Tiếp tục",
+    "units": [
+      {
+        "unit": "cm",
+        "min": 120,
+        "max": 260,
+        "ideal": 30
+      },
+      {
+        "unit": "ft",
+        "min": 4,
+        "max": 9,
+        "ideal": 5.8
+      }
+    ]
+  },
+  "OVERVIEW_INFO": {
+    "title": "Đánh giá nguy cơ tim mạch dựa trên các thông số thể chất của bạn",
+    "tenYears": "Nguy cơ đau tim trong 10 năm tới của bạn",
+    "normal": "Bình thường",
+    "weight": "Cân nặng",
+    "height": "Chiều cao",
+    "age": "Tuổi",
+    "gender": "Giới tính",
+    "80LikeYou": "80% người dùng iCardiac giống bạn",
+    "description": "Hãy nhớ duy trì thói quen lành mạnh, bao gồm chế độ ăn uống cân bằng và tập thể dục để hỗ trợ sức khỏe tổng thể của bạn",
+    "continue": "Tiếp tục"
+  },
+  "SELECT_CHOLESTEROL": {
+    "title": "Bạn có bị cholesterol cao không?",
+    "options": [
+      "Có", "Không", "Tôi không biết"
+    ]
+  },
+  "SELECT_BLOOD_PRESSURE": {
+    "title": "Chỉ số huyết áp trung bình của bạn là bao nhiêu?",
+    "options": [
+      "Dưới 120/Dưới 80",
+      "120-129/Dưới 80",
+      "130-139/80-89",
+      "140 trở lên/90 trở lên",
+      "Tôi không biết"
+    ]
+  },
+  "SELECT_HYPERTENSION": {
+    "title": "Bạn có bị cao huyết áp không?",
+    "options": [
+      "Có", "Không", "Tôi không biết"
+    ]
+  },
+  "SELECT_HIGH_BLOOD_PRESSURE": {
+    "title": "Bạn có dùng thuốc điều trị cao huyết áp không?",
+    "options": [
+      "Có", "Không"
+    ]
+  },
+  "SELECT_ACTIVITY_LEVEL": {
+    "title": "Mức độ hoạt động thể chất của bạn là gì?",
+    "options": [
+      "Ít vận động (hầu như không tập thể dục)",
+      "Hoạt động nhẹ (1-2 lần mỗi tuần)",
+      "Hoạt động vừa phải (3-5 lần mỗi tuần)",
+      "Rất năng động (hơn 5 lần mỗi tuần)"
+    ]
+  },
+  "SELECT_SLEEP": {
+    "title": "Bạn ngủ bao nhiêu giờ mỗi ngày?",
+    "options": [
+      "Dưới 5 giờ",
+      "5-7 giờ",
+      "Hơn 7 giờ"
+    ]
+  },
+  "SELECT_SMOKING_HISTORY": {
+    "title": "Bạn có hút thuốc hoặc từng hút thuốc không?",
+    "options": [
+      "Tôi hút thuốc lá",
+      "Tôi đã từng hút thuốc",
+      "Tôi chưa bao giờ hút thuốc"
+    ]
+  },
+  "SELECT_ALCOHOL": {
+    "title": "Bạn có uống rượu không?",
+    "options": [
+      "Thường xuyên",
+      "Thỉnh thoảng",
+      "Trước đây từng uống thường xuyên",
+      "Tôi không uống"
+    ]
+  },
+  "ANALYZING": {
+    "title": "Đang phân tích tình trạng sức khỏe của bạn",
+    "options": [
+      "Đang xây dựng kế hoạch sức khỏe cá nhân hóa dựa trên câu trả lời của bạn",
+      "Tạo lời khuyên cho sức khỏe tinh thần.",
+      "Điều chỉnh thuật toán đo lường phù hợp với dữ liệu của bạn."
+    ]
+  },
+  "SEND_EMAIL": {
+    "title": "Vui lòng nhập email để nhận kế hoạch sức khỏe cá nhân của bạn",
+    "description": "Chúng tôi tôn trọng quyền riêng tư và tuân thủ nghiêm ngặt chính sách %@ khi xử lý dữ liệu cá nhân của bạn. Bằng cách gửi biểu mẫu này với thông tin liên hệ, bạn đồng ý nhận thông tin từ chúng tôi.",
+    "privacyPolicy": "Chính sách bảo mật",
+    "submit": "Gửi"
+  }
+}

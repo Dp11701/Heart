@@ -2,6 +2,7 @@ import icTrustedBy from '../../assets/icTrustedBy.png'
 import icStar from '../../assets/icStar.png'
 
 import {z} from "zod";
+import {IAPConfig} from "../../models/IAPConfig";
 
 const CommentModel = z.object({
     title: z.string(),
@@ -42,7 +43,7 @@ function CommentView(props: CommentViewProps) {
             <div style={{display: 'flex', flexDirection: 'row'}}>
                 {
                     Array(props.comment.star).fill(0).map((_, idx) => {
-                        return <img src={icStar} alt={''} style={{width: 18, height: 18}}/>
+                        return <img key={idx} src={icStar} alt={''} style={{width: 18, height: 18}}/>
                     })
                 }
             </div>
@@ -64,7 +65,8 @@ function CommentView(props: CommentViewProps) {
     </div>
 }
 
-export function IAPMillionsUsersLoveUsView() {
+export function IAPMillionsUsersLoveUsView(props: { config: IAPConfig }) {
+    const parts = props.config.millionsOfUsers.split('%@')
     return <div style={{
         display: 'flex',
         flexDirection: 'column',
@@ -74,7 +76,11 @@ export function IAPMillionsUsersLoveUsView() {
             textAlign: 'start',
             margin: '0px 24px',
             marginTop: 24
-        }}>Millions of users <span style={{ color: "#FF3D60" }}>love our plans</span></h2>
+        }}>
+            {parts[0]}
+            {<span style={{ color: "#FF3D60" }}>{props.config.millionsOfUseHighlight}</span>}
+            {parts[1]}
+        </h2>
 
         <div style={{
             display: 'flex',
@@ -84,7 +90,7 @@ export function IAPMillionsUsersLoveUsView() {
             gap: 16,
             scrollbarWidth: 'none'
         }}>
-            <CommentView comment={{
+            <CommentView key={0} comment={{
                 title: "Fantastic Experience!",
                 description: "This app helped me lower my blood pressure!",
                 author: "Mark",
@@ -92,7 +98,7 @@ export function IAPMillionsUsersLoveUsView() {
                 star: 5
             }}/>
 
-            <CommentView comment={{
+            <CommentView key={1} comment={{
                 title: "Fantastic Experience!",
                 description: "This app helped me lower my blood pressure!",
                 author: "Mark",
@@ -100,7 +106,7 @@ export function IAPMillionsUsersLoveUsView() {
                 star: 5
             }}/>
 
-            <CommentView comment={{
+            <CommentView  key={2} comment={{
                 title: "Fantastic Experience!",
                 description: "This app helped me lower my blood pressure!",
                 author: "Mark",
@@ -108,7 +114,7 @@ export function IAPMillionsUsersLoveUsView() {
                 star: 5
             }}/>
 
-            <CommentView comment={{
+            <CommentView key={3} comment={{
                 title: "Fantastic Experience!",
                 description: "This app helped me lower my blood pressure!",
                 author: "Mark",

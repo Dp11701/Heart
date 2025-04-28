@@ -2,8 +2,9 @@ import iconTrusted from '../assets/icWelcomeTrusted.png'
 import iconTick from '../assets/icTick.svg'
 import '../styles/WelcomeView.css'
 import ContinueButton from "../components/ContinueButton";
+import {WelcomeSchema} from "../models/WelcomeConfig";
 
-function WelcomeScreen(props: { onContinue: () => void }) {
+function WelcomeScreen(props: { config: WelcomeSchema, onContinue: () => void }) {
     return <div className='welcome-container'>
 
         <div className='welcome-thumbnail-container'/>
@@ -30,13 +31,13 @@ function WelcomeScreen(props: { onContinue: () => void }) {
                             left: 0,
                             right: 0,
                         }}>
-                            <span style={{fontWeight: 500}}>Trusted by</span>
+                            <span style={{fontWeight: 500}}>{props.config.trustedBy}</span>
                             <div style={{height: 4}}/>
                             <span style={{
                                 fontWeight: 'bold',
                                 fontSize: '24px',
                             }}>
-                            1M+ Users
+                            {props.config["1M+"]}
                         </span>
                         </div>
 
@@ -54,25 +55,21 @@ function WelcomeScreen(props: { onContinue: () => void }) {
                 <div style={{height: '12px'}}></div>
 
                 <div className='welcome-title-container'>
-                    <span className='welcome-title'>Welcome to </span>
-                    <span className='welcome-title-highlight'> iCardiac</span>
+                    <span className='welcome-title'>{props.config.welcomeTo}</span>
+                    <span className='welcome-title-highlight'>{props.config.appName}</span>
                 </div>
 
                 <div style={{height: '24px'}}></div>
 
                 <div className='welcome-benefits'>
-                    <div className='welcome-benefits-item'>
-                        <img src={iconTick} alt='tick'/>
-                        <span>Control your Heart health</span>
-                    </div>
-                    <div className='welcome-benefits-item'>
-                        <img src={iconTick} alt='tick'/>
-                        <span>Access Blood Pressure Report</span>
-                    </div>
-                    <div className='welcome-benefits-item'>
-                        <img src={iconTick} alt='tick'/>
-                        <span>Improve your stress level</span>
-                    </div>
+                    {
+                        props.config.features.map((e, idx) => {
+                            return <div key={idx} className='welcome-benefits-item'>
+                                    <img src={iconTick} alt='tick'/>
+                                    <span>{e}</span>
+                                </div>
+                        })
+                    }
                 </div>
             </div>
 
@@ -82,14 +79,14 @@ function WelcomeScreen(props: { onContinue: () => void }) {
                 flexDirection: 'column',
                 gap: '10px',
             }}>
-                <ContinueButton text="Continue" onClick={ () => {  props.onContinue() } }/>
+                <ContinueButton text={props.config.continueTitle} onClick={ () => {  props.onContinue() } }/>
 
                 <span style={{
                     fontSize: '10px',
                     padding: '5px',
                     width: '100%',
                     zIndex: 1
-                }}>This does not constitute a diagnosis of medical advice</span>
+                }}>{props.config.advice}</span>
 
                 <div
                     style={{
@@ -100,12 +97,12 @@ function WelcomeScreen(props: { onContinue: () => void }) {
                         flexDirection: 'row',
                     }}
                 >
-                    <a className='welcome-link' href='https://google.com' target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-                    <a className='welcome-link' href='https://google.com' target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-                    <a className='welcome-link' href='https://google.com 'target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                    <a className='welcome-link' href={props.config.privacyPolicyLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>{props.config.privacyPolicy}</a>
+                    <a className='welcome-link' href={props.config.termOfUseLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>{props.config.termOfUse}</a>
+                    <a className='welcome-link' href={props.config.subscriptionTermsLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>{props.config.subscriptionTerms}</a>
                 </div>
 
-                <div style={{height: '10px'}}></div>
+                <div style={{height: '16px'}}></div>
 
             </div>
         </div>

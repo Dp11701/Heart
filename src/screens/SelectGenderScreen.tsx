@@ -8,29 +8,33 @@ import {useState} from "react";
 import {EnumGender} from "../models/EnumGender";
 
 import '../styles/SelectGenderScreen.css'
+import '../styles/SelectRadioView.css'
 import IdealView from "../components/IdealView";
+import {SelectGenderSchema, SelectSchema} from "../models/WelcomeConfig";
 
-function SelectGenderScreen(props: { onSelectGender: (gender: EnumGender) => void }) {
+function SelectGenderScreen(props: { config: SelectGenderSchema, onSelectGender: (gender: string) => void }) {
 
-    const [selectedGender, setSelectedGender] = useState(EnumGender.parse('NOT_TO_SAY'))
+    const [selectedGender, setSelectedGender] = useState<string | null>(null)
 
-    function selectGender(gender: EnumGender) {
+    function selectGender(gender: string) {
+        if (selectedGender !== null) return;
         setSelectedGender(gender);
+
         setTimeout(() => {
             props.onSelectGender(gender)
-        }, 500)
+        }, 600)
     }
 
-    function view(gender: EnumGender) {
+    function view(gender: string) {
         const isSelected = selectedGender === gender
         return <div
-            className='gender-card-container'
+            className={`gender-card-container ${isSelected ? 'bounce' : ''}`}
             onClick={ () => {
                 selectGender(gender)
             }}
         >
             <img
-                src={ gender === 'MALE' ? icMale : icFemale}
+                src={ gender === props.config.male ? icMale : icFemale}
                 alt={''}
                 style={{
                     width: '100%',
@@ -42,7 +46,7 @@ function SelectGenderScreen(props: { onSelectGender: (gender: EnumGender) => voi
                     fontWeight: 'bold',
                     fontSize: '18px'
                 }}
-            > {gender === 'MALE' ? "Male" : "Female"}
+            > {gender === props.config.male ? props.config.male : props.config.female}
             </span>
 
             <img src={isSelected ? icChecked : icUncheck} alt={''} style={{
@@ -59,9 +63,9 @@ function SelectGenderScreen(props: { onSelectGender: (gender: EnumGender) => voi
         width: '100%',
         height: '100%',
     }}>
-        <span className='title-text'> What is Your Gender? </span>
+        <span className='title-text'>{props.config.title}</span>
 
-        <IdealView text='Gender affects your cardiovascular health. It help us tailor your results to you.'/>
+        <IdealView text={props.config.description}/>
 
         <div style={{
             display: 'flex',
@@ -71,16 +75,16 @@ function SelectGenderScreen(props: { onSelectGender: (gender: EnumGender) => voi
             gap: '16px',
             margin: '8px 24px'
         }}>
-            { view('MALE')}
-            { view('FEMALE')}
+            { view(props.config.male) }
+            { view(props.config.female)}
         </div>
 
         <div>
             <button
                className='gender-prefer-not-to-say'
-               onClick={() => selectGender('NOT_TO_SAY')}
+               onClick={() => selectGender(props.config.preferNotToSay)}
             >
-                Prefer not to say
+                {props.config.preferNotToSay}
             </button>
         </div>
     </div>

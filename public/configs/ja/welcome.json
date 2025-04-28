@@ -1,0 +1,168 @@
+{
+  "WELCOME": {
+    "trustedBy": "信頼されています",
+    "1M+": "100万人以上のユーザー",
+    "welcomeTo": "ようこそ ",
+    "appName": "iCardiac",
+    "features": [
+      "心臓の健康を管理する",
+      "血圧レポートにアクセスする",
+      "ストレスレベルを改善する"
+    ],
+    "continueTitle": "続行",
+    "advice": "これは診断または医療アドバイスではありません",
+    "privacyPolicy": "プライバシーポリシー",
+    "termOfUse": "利用規約",
+    "subscriptionTerms": "サブスクリプション規約",
+    "privacyPolicyLink": "https://begamob.com/cast-policy.html",
+    "termOfUseLink": "https://begamob.com/cast-policy.html",
+    "subscriptionTermsLink": "https://begamob.com/cast-policy.html"
+  },
+  "SELECT_GENDER": {
+    "title": "あなたの性別は？",
+    "description": "性別は心血管の健康に影響します。結果をあなたに合わせてカスタマイズするのに役立ちます。",
+    "male": "男性",
+    "female": "女性",
+    "preferNotToSay": "答えたくない"
+  },
+  "SELECT_AGE": {
+    "title": "あなたの年齢は？",
+    "description": "これにより、あなたの健康状態を正確に判断できます",
+    "note": "%@から%@までの値を入力してください",
+    "continue": "続行",
+    "units": [
+      {
+        "unit": "歳",
+        "min": 20,
+        "max": 95,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_WEIGHT": {
+    "title": "現在の体重は？",
+    "note": "%@から%@までの値を入力してください",
+    "continue": "続行",
+    "units": [
+      {
+        "unit": "kg",
+        "min": 10,
+        "max": 300,
+        "ideal": 72
+      },
+      {
+        "unit": "lbs",
+        "min": 20,
+        "max": 700,
+        "ideal": 30
+      }
+    ]
+  },
+  "SELECT_HEIGHT": {
+    "title": "あなたの身長は？",
+    "note": "%@から%@までの値を入力してください",
+    "continue": "続行",
+    "units": [
+      {
+        "unit": "cm",
+        "min": 120,
+        "max": 260,
+        "ideal": 30
+      },
+      {
+        "unit": "ft",
+        "min": 4,
+        "max": 9,
+        "ideal": 5.8
+      }
+    ]
+  },
+  "OVERVIEW_INFO": {
+    "title": "あなたの身体パラメータに基づいた心臓リスク評価",
+    "tenYears": "10年間の心臓発作リスク",
+    "normal": "正常",
+    "weight": "体重",
+    "height": "身長",
+    "age": "年齢",
+    "gender": "性別",
+    "80LikeYou": "iCardiacユーザーの80％はあなたのようです",
+    "description": "バランスの取れた食事と運動を含む健康的な習慣を維持することは、全体的な健康をサポートするために重要です",
+    "continue": "続行"
+  },
+  "SELECT_CHOLESTEROL": {
+    "title": "高コレステロールですか？",
+    "options": [
+      "はい", "いいえ", "わからない"
+    ]
+  },
+  "SELECT_BLOOD_PRESSURE": {
+    "title": "通常の血圧はどれくらいですか？",
+    "options": [
+      "120未満/80未満",
+      "120-129/80未満",
+      "130-139/80-89",
+      "140以上/90以上",
+      "わからない"
+    ]
+  },
+  "SELECT_HYPERTENSION": {
+    "title": "高血圧ですか？",
+    "options": [
+      "はい", "いいえ", "わからない"
+    ]
+  },
+  "SELECT_HIGH_BLOOD_PRESSURE": {
+    "title": "高血圧の薬を服用していますか？",
+    "options": [
+      "はい", "いいえ"
+    ]
+  },
+  "SELECT_ACTIVITY_LEVEL": {
+    "title": "身体活動レベルは？",
+    "options": [
+      "座りがち（ほとんど運動しない）",
+      "軽い活動（週1-2回）",
+      "適度な活動（週3-5回）",
+      "非常に活発（週5回以上）"
+    ]
+  },
+  "SELECT_SLEEP": {
+    "title": "1日に何時間寝ていますか？",
+    "options": [
+      "5時間未満",
+      "5-7時間",
+      "7時間以上"
+    ]
+  },
+  "SELECT_SMOKING_HISTORY": {
+    "title": "喫煙歴はありますか？",
+    "options": [
+      "たばこを吸っている",
+      "元喫煙者",
+      "吸ったことがない"
+    ]
+  },
+  "SELECT_ALCOHOL": {
+    "title": "お酒を飲みますか？",
+    "options": [
+      "定期的に飲む",
+      "時々飲む",
+      "過去に定期的に飲んでいた",
+      "飲まない"
+    ]
+  },
+  "ANALYZING": {
+    "title": "健康状態を分析中",
+    "options": [
+      "あなたの回答を使用してカスタマイズされた健康プランを作成中",
+      "メンタルウェルネスのためのアドバイスを作成中。",
+      "データに合わせて測定アルゴリズムを調整中。"
+    ]
+  },
+  "SEND_EMAIL": {
+    "title": "あなた専用の健康プランを受け取るにはメールを入力してください",
+    "description": "私たちはあなたのプライバシーを尊重し、個人データを処理する際には厳格に私たちの%@に従います。このフォームを連絡先情報とともに送信することで、私たちからの連絡を受け取ることに同意したことになります",
+    "privacyPolicy": "プライバシーポリシー",
+    "submit": "送信"
+  }
+}

@@ -2,11 +2,44 @@ import icAppIcon from  '../assets/icAppIconPayment.png'
 import icSuccess2 from '../assets/icSuccess2.png'
 import icDownloadAppStore from '../assets/icDownloadAppStore.png'
 import QRCode from 'react-qr-code';
+import defaultConfig from '../configs/result.json'
+import {useEffect, useState} from "react";
+import {ResultSuccessConfig} from "../models/ResultSuccessConfig";
+import {useParams} from "react-router-dom";
+
+
 
 const APP_LINK = 'https://apps.apple.com/app/id6468660073'
 
 
 export function FinalSuccessScreen() {
+
+    const { languageId } = useParams()
+
+    const [config, setConfig] = useState(ResultSuccessConfig.parse(defaultConfig))
+
+    async function switchConfigs() {
+        const locale = localStorage.getItem("languageCode")
+        if (locale) {
+            try {
+                const response = await fetch(`/configs/${locale}/result.json`)
+                const json = await response.json();
+                const parsed = ResultSuccessConfig.parse(json);
+                setConfig(parsed);
+            } catch {
+                localStorage.removeItem("languageCode");
+                setConfig(defaultConfig);
+            }
+        } else {
+            localStorage.removeItem("languageCode");
+            setConfig(defaultConfig);
+        }
+    }
+
+    useEffect(() => {
+        switchConfigs().then()
+    }, [])
+
     return <div style={{
         display: 'flex',
         flexDirection: 'column',
@@ -45,7 +78,7 @@ export function FinalSuccessScreen() {
                 textAlign: 'center',
                 color: '#0D0D0E',
                 lineHeight: 1.3
-            }}>{`Thank you for your purchase!`}</span>
+            }}>{config.thanks}</span>
 
             <div style={{
                 display: 'flex',
@@ -54,7 +87,7 @@ export function FinalSuccessScreen() {
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <span style={{fontWeight: 600, textAlign: 'center'}} color={'#45454C'}>1. Download the app by clicking on the link below</span>
+                <span style={{fontWeight: 600, textAlign: 'center'}} color={'#45454C'}>{config.step1}</span>
                 <QRCode value={APP_LINK} size={100}/>
                 <a href={APP_LINK} target={'_blank'}><img src={icDownloadAppStore} alt={''}
                                                           style={{width: 133, aspectRatio: '133/46'}}/></a>
@@ -67,11 +100,11 @@ export function FinalSuccessScreen() {
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <span style={{fontWeight: 600, textAlign: 'center'}} color={'#45454C'}>2. Use the same credentials as on the website to log in</span>
+                <span style={{fontWeight: 600, textAlign: 'center'}} color={'#45454C'}>{config.step2}</span>
                 <img src={icSuccess2} alt={''} style={{width: 222, aspectRatio: '888/576'}}/>
             </div>
 
-            <span style={{fontWeight: 600}} color={'#45454C'}>3. Enjoy Your iCardiac Journey</span>
+            <span style={{fontWeight: 600}} color={'#45454C'}>{config.step3}</span>
         </div>
 
     </div>

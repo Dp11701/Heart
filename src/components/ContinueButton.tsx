@@ -8,6 +8,7 @@ export interface ContinueButtonProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 function ContinueButton(props: ContinueButtonProps): React.JSX.Element {
+
     const { text, disabled, additionClassName, ...rest } = props;
     const baseClass = props.disabled ? 'continue-button-disabled' : 'continue-button';
     const fullClassName = `${baseClass} ${props.additionClassName || ""}`.trim();
