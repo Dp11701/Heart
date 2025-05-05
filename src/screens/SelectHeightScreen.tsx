@@ -4,6 +4,9 @@ import {TextInputView} from "../components/TextInputView";
 import ContinueButton from "../components/ContinueButton";
 import {useEffect, useState} from "react";
 import {SelectInputValueSchema, SelectSchema} from "../models/WelcomeConfig";
+import {Utils} from "../utils/Utils";
+
+const heightConfig = Utils.valueConfig().height
 
 export interface SelectHeightScreenProps {
     config: SelectInputValueSchema
@@ -12,35 +15,35 @@ export interface SelectHeightScreenProps {
 
 export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element {
 
-    const [unit, setUnit] = useState(props.config.units[0].unit);
+    const [unit, setUnit] = useState(heightConfig[0].unit);
     const [value, setValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(props.config.units[0].max);
-    const [minValue, setMinValue] = useState(props.config.units[0].min);
-    const [idealValue, setIdealValue] = useState(props.config.units[0].ideal);
+    const [maxValue, setMaxValue] = useState(heightConfig[0].max);
+    const [minValue, setMinValue] = useState(heightConfig[0].min);
+    const [idealValue, setIdealValue] = useState(heightConfig[0].ideal);
     const [isValid, setIsValid] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
     function currentUnit() {
-        return props.config.units.find(e => e.unit === unit)
+        return heightConfig.find(e => e.unit === unit)
     }
 
     useEffect(() => {
         switch (unit) {
-            case props.config.units[1].unit:
+            case heightConfig[1].unit:
                 let newValueInFt = value*0.0328084
-                setMaxValue(props.config.units[1].max)
-                setMinValue(props.config.units[1].min)
-                setIdealValue(props.config.units[1].ideal)
+                setMaxValue(heightConfig[1].max)
+                setMinValue(heightConfig[1].min)
+                setIdealValue(heightConfig[1].ideal)
                 setInputValue(newValueInFt.toFixed(2))
-                checkValid(newValueInFt.toFixed(2), props.config.units[1].min, props.config.units[1].max, true)
+                checkValid(newValueInFt.toFixed(2), heightConfig[1].min, heightConfig[1].max, true)
                 break;
-            case props.config.units[0].unit:
-                setMaxValue(props.config.units[0].max)
-                setMinValue(props.config.units[0].min)
-                setIdealValue(props.config.units[0].ideal)
+            case heightConfig[0].unit:
+                setMaxValue(heightConfig[0].max)
+                setMinValue(heightConfig[0].min)
+                setIdealValue(heightConfig[0].ideal)
                 let newValueInCm = value*30.48
                 setInputValue(newValueInCm.toFixed(0))
-                checkValid(newValueInCm.toFixed(0), props.config.units[0].min, props.config.units[0].max, true)
+                checkValid(newValueInCm.toFixed(0), heightConfig[0].min, heightConfig[0].max, true)
                 break
         }
     }, [unit])
@@ -71,7 +74,7 @@ export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element 
 
         <SwitcherView
             currentUnit={unit}
-            units={props.config.units.map(e => e.unit)}
+            units={heightConfig.map(e => e.unit)}
             onSelectUnit={(newUnit) => {
                 setUnit(newUnit);
             }
@@ -105,12 +108,13 @@ export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element 
                 props.config.note.split('%@')
                     .map((part, idx) => {
                         return (
-                            <>
+                            <span key={idx}>
                                 <span>{part}</span>
                                 {idx < 2 && (
-                                    <span style={{fontWeight: 'bold'}}>{[currentUnit()?.min, currentUnit()?.max][idx] + unit} </span>
+                                    <span
+                                        style={{fontWeight: 'bold'}}>{[currentUnit()?.min, currentUnit()?.max][idx] + unit} </span>
                                 )}
-                            </>
+                            </span>
                         )
                     })
             }

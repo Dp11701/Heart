@@ -1,4 +1,6 @@
 import {z} from "zod";
+import {ValueConfig} from "../models/ValueConfig";
+import defaultValueConfig from '../configs/value_config.json'
 
 export const EnumOS = z.enum([
     'Android', 'iOS', 'macOS', 'Windows', 'Unknown', 'Windows Phone'
@@ -26,4 +28,9 @@ export class Utils {
         }
         return "Unknown";
     }
+
+    static valueConfig(): ValueConfig {
+        return ValueConfig.parse(defaultValueConfig);
+    }
+
 }

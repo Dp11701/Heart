@@ -21,7 +21,6 @@ export const SelectInputValueSchema = z.object({
     title: z.string(),
     description: z.string().optional(),
     note: z.string(),
-    units: z.array(UnitSchema),
     continue: z.string(),
 });
 export type SelectInputValueSchema = z.infer<typeof SelectInputValueSchema>;

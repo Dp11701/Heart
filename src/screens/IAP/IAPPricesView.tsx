@@ -121,6 +121,6 @@ export function IAPPricesView(props: { config: IAPConfig }) {
             whiteSpace: 'pre-line',
             lineHeight: 1.8,
             textAlign: 'center'
-        }}>{`You will pay $0 for your 3-day trial, then 6,99 per week. Manage your subscriptions via link đối tác :))\nMoney-back guarantee. Cancel anytime`}</span>
+        }}>{`You will pay $0 for your 3-day trial, then 6,99 per week.\nMoney-back guarantee. Cancel anytime`}</span>
     </div>
 }

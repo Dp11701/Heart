@@ -25,5 +25,28 @@
   "selectPaymentMethod": "Select your payment method",
   "debitOrCredit": "Debit or Credit Card",
   "priceToday": "Price today:",
-  "priceTodayDes": "$0 for 3-day trial"
+  "priceTodayDes": "$0 for 3-day trial",
+  "comments": [
+    {
+      "title": "Fantastic Experience!",
+      "description": "This app helped me lower my blood pressure!",
+      "author": "Mark",
+      "time": "52 years old",
+      "star": 5
+    },
+    {
+      "title": "Highly Recommend!",
+      "description": "I never knew tracking my heart rate could be this easy. It keeps me motivated to stay active.",
+      "author": "David",
+      "time": "59 years old",
+      "star": 5
+    },
+    {
+      "title": "Great Support for My Health Journey!",
+      "description": "I’ve lost weight and lowered my cholesterol with the help of the health insights this app gives.",
+      "author": "Maria",
+      "time": "54 years old",
+      "star": 5
+    }
+  ]
 }

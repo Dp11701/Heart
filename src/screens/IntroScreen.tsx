@@ -83,27 +83,27 @@ function IntroScreen() {
     function screen(step: IntroStep): JSX.Element {
         switch (step) {
             case 'WELCOME':
-                return <WelcomeScreen config={config.WELCOME} onContinue={ () => { nextStep() } } />
+                return <WelcomeScreen key={step} config={config.WELCOME} onContinue={ () => { nextStep() } } />
             case 'SELECT_GENDER':
-                return <SelectGenderScreen config={config.SELECT_GENDER} onSelectGender={ (gender) => {
+                return <SelectGenderScreen key={step} config={config.SELECT_GENDER} onSelectGender={ (gender) => {
                     setUserInfo({...userInfo, ...{ gender: gender }})
                     nextStep()
                 } }
                 />
             case 'SELECT_AGE':
-                return <SelectAgeScreen config={config.SELECT_AGE} onContinue={ (age) => {
+                return <SelectAgeScreen key={step} config={config.SELECT_AGE} onContinue={ (age) => {
                     setUserInfo({...userInfo, ...{ age: age }})
                     nextStep()
                 }}
                 />
             case 'SELECT_HEIGHT':
-                return <SelectHeightScreen config={config.SELECT_HEIGHT} onContinue={ (value, unit) => {
+                return <SelectHeightScreen key={step} config={config.SELECT_HEIGHT} onContinue={ (value, unit) => {
                     setUserInfo({ ...userInfo, ...{ height: value, heightUnit: unit} })
                     nextStep()
                 }}
                 />
             case 'SELECT_WEIGHT':
-                return <SelectWeightScreen config={config.SELECT_WEIGHT} onContinue={ (value, unit) => {
+                return <SelectWeightScreen key={step} config={config.SELECT_WEIGHT} onContinue={ (value, unit) => {
                     setUserInfo({ ...userInfo, ...{ weight: value, weightUnit: unit} })
                     nextStep() }}
                 />

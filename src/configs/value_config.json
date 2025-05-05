@@ -1,0 +1,38 @@
+{
+  "weight": [
+    {
+      "unit": "kg",
+      "min": 10,
+      "max": 300,
+      "ideal": 30
+    },
+    {
+      "unit": "lbs",
+      "min": 20,
+      "max": 700,
+      "ideal": 175
+    }
+  ],
+  "height": [
+    {
+      "unit": "cm",
+      "min": 120,
+      "max": 260,
+      "ideal": 30
+    },
+    {
+      "unit": "ft",
+      "min": 4,
+      "max": 9,
+      "ideal": 5.8
+    }
+  ],
+  "age": [
+    {
+      "unit": "year",
+      "min": 20,
+      "max": 95,
+      "ideal": 30
+    }
+  ]
+}

@@ -5,12 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*user-select: none;*/
+  user-select: none;
   overflow-x: hidden;
   overscroll-behavior-x: none;
 }
 html {
-  /*user-select: none;*/
+  user-select: none;
   overflow-x: hidden;
   overscroll-behavior-x: none;
 }

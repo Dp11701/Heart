@@ -19,7 +19,6 @@ export function EmailScreen(props: EmailScreenProps) {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            console.log(inputRef)
             inputRef.current?.focus();
         }, 150)
 

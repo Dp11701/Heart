@@ -4,6 +4,10 @@ import {TextInputView} from "../components/TextInputView";
 import ContinueButton from "../components/ContinueButton";
 import {useEffect, useState} from "react";
 import {SelectInputValueSchema} from "../models/WelcomeConfig";
+import {Utils} from "../utils/Utils";
+
+const weightConfig = Utils.valueConfig().weight;
+
 
 export interface SelectWeightScreenProps {
     config: SelectInputValueSchema
@@ -12,42 +16,43 @@ export interface SelectWeightScreenProps {
 
 export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element {
 
-    const [unit, setUnit] = useState(props.config.units[0].unit);
+    const [unit, setUnit] = useState(weightConfig[0].unit);
     const [value, setValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(props.config.units[0].max);
-    const [minValue, setMinValue] = useState(props.config.units[0].min);
-    const [idealValue, setIdealValue] = useState(props.config.units[0].ideal);
+    const [maxValue, setMaxValue] = useState(weightConfig[0].max);
+    const [minValue, setMinValue] = useState(weightConfig[0].min);
+    const [idealValue, setIdealValue] = useState(weightConfig[0].ideal);
     const [isValid, setIsValid] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
+
     useEffect(() => {
         switch (unit) {
-            case props.config.units[0].unit:
-                let newValueInKg = value*2.20462;
-                setMaxValue(props.config.units[0].max);
-                setMinValue(props.config.units[0].min);
-                setIdealValue(props.config.units[0].ideal);
+            case weightConfig[0].unit:
+                let newValueInKg = value*0.453592;
+                setMaxValue(weightConfig[0].max);
+                setMinValue(weightConfig[0].min);
+                setIdealValue(weightConfig[0].ideal);
                 setInputValue(newValueInKg.toFixed(0));
-                checkValid(newValueInKg.toFixed(0), props.config.units[0].min, props.config.units[0].max, true);
+                checkValid(newValueInKg.toFixed(0), weightConfig[0].min, weightConfig[0].max, true);
                 break;
-            case props.config.units[1].unit:
-                setMaxValue(props.config.units[1].max);
-                setMinValue(props.config.units[1].min);
-                setIdealValue(props.config.units[1].ideal);
-                let newValueInLbs = value * 0.453592;
+            case weightConfig[1].unit:
+                setMaxValue(weightConfig[1].max);
+                setMinValue(weightConfig[1].min);
+                setIdealValue(weightConfig[1].ideal);
+                let newValueInLbs = value*2.20462;
                 setInputValue(newValueInLbs.toFixed(0));
-                checkValid(newValueInLbs.toFixed(0), props.config.units[1].min, props.config.units[1].max, true);
+                checkValid(newValueInLbs.toFixed(0), weightConfig[1].min, weightConfig[1].max, true);
                 break
         }
     }, [unit])
 
     function currentUnit() {
-        return props.config.units.find(e => e.unit === unit)
+        return weightConfig.find(e => e.unit === unit)
     }
 
     function checkValid(stringNumber: string, minValue: number, maxValue: number, reloadInputText: boolean = false) {
         const number = Number(stringNumber);
-        console.log("CHECK VALID", number, stringNumber)
+
         if (isFinite(number) && number >= minValue && number <= maxValue) {
             setValue(number)
             setIsValid(true)
@@ -72,7 +77,7 @@ export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element 
 
         <SwitcherView
             currentUnit={unit}
-            units={props.config.units.map(e => e.unit)}
+            units={weightConfig.map(e => e.unit)}
             onSelectUnit={(newUnit) => {
                 setUnit(newUnit);
             }
@@ -107,12 +112,12 @@ export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element 
                 props.config.note.split('%@')
                     .map((part, idx) => {
                         return (
-                            <>
+                            <span key={idx}>
                                 <span>{part}</span>
                                 {idx < 2 && (
                                     <span style={{fontWeight: 'bold'}}>{[currentUnit()?.min, currentUnit()?.max][idx] + unit} </span>
                                 )}
-                            </>
+                            </span>
                         )
                     })
             }

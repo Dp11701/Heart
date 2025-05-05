@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import {CommentModel} from "../screens/IAP/IAPMillionsUsersLoveUsView";
 
 export const IAPConfig = z.object({
     yourSpecialOffer: z.string(),
@@ -27,7 +28,8 @@ export const IAPConfig = z.object({
     selectPaymentMethod: z.string(),
     debitOrCredit: z.string(),
     priceToday: z.string(),
-    priceTodayDes: z.string()
+    priceTodayDes: z.string(),
+    comments: CommentModel.array().nullish().transform(e => e || [])
 });
 
 export type IAPConfig = z.infer<typeof IAPConfig>;

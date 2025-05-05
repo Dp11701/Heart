@@ -4,7 +4,7 @@ import icStar from '../../assets/icStar.png'
 import {z} from "zod";
 import {IAPConfig} from "../../models/IAPConfig";
 
-const CommentModel = z.object({
+export const CommentModel = z.object({
     title: z.string(),
     description: z.string(),
     author: z.string(),
@@ -90,37 +90,11 @@ export function IAPMillionsUsersLoveUsView(props: { config: IAPConfig }) {
             gap: 16,
             scrollbarWidth: 'none'
         }}>
-            <CommentView key={0} comment={{
-                title: "Fantastic Experience!",
-                description: "This app helped me lower my blood pressure!",
-                author: "Mark",
-                time: "52 years old",
-                star: 5
-            }}/>
-
-            <CommentView key={1} comment={{
-                title: "Fantastic Experience!",
-                description: "This app helped me lower my blood pressure!",
-                author: "Mark",
-                time: "52 years old",
-                star: 5
-            }}/>
-
-            <CommentView  key={2} comment={{
-                title: "Fantastic Experience!",
-                description: "This app helped me lower my blood pressure!",
-                author: "Mark",
-                time: "52 years old",
-                star: 5
-            }}/>
-
-            <CommentView key={3} comment={{
-                title: "Fantastic Experience!",
-                description: "This app helped me lower my blood pressure!",
-                author: "Mark",
-                time: "52 years old",
-                star: 5
-            }}/>
+            {
+                props.config.comments.map((comment, idx) => {
+                    return <CommentView key={idx} comment={comment}/>
+                })
+            }
         </div>
         <img src={icTrustedBy} alt={''} style={{
             margin: '0px 24px',

@@ -52,7 +52,9 @@ export function IAPGuaranteeView(props: { config: IAPConfig }) {
             <span style={{fontWeight: 'bold'}}>{props.config.secureCheckout}</span>
             {`\n${props.config.secureCheckout2}\n`}
             <span style={{fontWeight: 'bold'}}>{props.config.needHelp}</span>
-            {`\n${props.config.needHelp2}feedback@begamob.com\n\n`}
+            {`\n${props.config.needHelp2}`}
+            <a href={'mailto:feedback@begamob.com'}>feedback@begamob.com</a>
+            {`\n\n`}
             <span style={{
                 lineHeight: 1,
                 textAlign: 'start',
