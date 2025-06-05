@@ -7,7 +7,6 @@ import {SelectHeightScreen} from "./SelectHeightScreen";
 import {SelectWeightScreen} from "./SelectWeightScreen";
 import {BMIScreen} from "./BMIScreen";
 import {SelectRadioView} from "./SelectRadioView";
-import {Constants} from "../models/Constants";
 import AppHeaderView from "../components/AppHeaderView";
 import {AnalyzingScreen} from "./AnalyzingScreen";
 import {EmailScreen} from "./EmailScreen";

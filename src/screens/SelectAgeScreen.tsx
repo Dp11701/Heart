@@ -1,13 +1,9 @@
-import { JSX, useEffect, useState} from "react";
-import Picker from 'react-mobile-picker'
+import {JSX, useState} from "react";
 import IdealView from "../components/IdealView";
 import '../styles/SelectAgeScreen.css'
 import ContinueButton from "../components/ContinueButton";
-import {SwitcherView} from "../components/SwitcherView";
 import {TextInputView} from "../components/TextInputView";
-
-import '../styles/SelectAgeScreen.css'
-import {SelectInputValueSchema, SelectSchema} from "../models/WelcomeConfig";
+import {SelectInputValueSchema} from "../models/WelcomeConfig";
 import {Utils} from "../utils/Utils";
 
 const ageConfig = Utils.valueConfig().age;
@@ -25,7 +21,6 @@ function SelectAgeScreen(props: SelectAgeScreenProps): JSX.Element {
     const [idealValue, setIdealValue] = useState(ageConfig[0]?.ideal || 30);
     const [isValid, setIsValid] = useState(false);
     const [inputValue, setInputValue] = useState("");
-
 
     function checkValid(stringNumber: string, minValue: number, maxValue: number, reloadInputText: boolean = false) {
         const number = parseInt(stringNumber);

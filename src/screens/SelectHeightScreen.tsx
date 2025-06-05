@@ -3,7 +3,7 @@ import {SwitcherView} from "../components/SwitcherView";
 import {TextInputView} from "../components/TextInputView";
 import ContinueButton from "../components/ContinueButton";
 import {useEffect, useState} from "react";
-import {SelectInputValueSchema, SelectSchema} from "../models/WelcomeConfig";
+import {SelectInputValueSchema} from "../models/WelcomeConfig";
 import {Utils} from "../utils/Utils";
 
 const heightConfig = Utils.valueConfig().height
