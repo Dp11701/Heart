@@ -1,29 +1,63 @@
 {
-  "yourSpecialOffer": "Ưu đãi đặc biệt của bạn chỉ được giữ trong 10 phút",
-  "thumbTitle": "Trong thời gian giới hạn, kế hoạch Sức khỏe Tim mạch của bạn được lưu trong iCardiac Premium",
-  "checkWithBody": "Kiểm tra cơ thể của bạn",
-  "enableFreeTrial": "Kích hoạt dùng thử miễn phí",
-  "title1": "HÀNG NĂM",
-  "subtitle1": "Chỉ 99,99 USD mỗi năm",
-  "title2": "HÀNG TUẦN",
-  "subtitle2": "",
-  "price1": "8,6 $\nmỗi tuần",
-  "price2": "Sau đó 12$\nmỗi tuần",
-  "purchaseButton": "BẮT ĐẦU DÙNG THỬ 3 NGÀY",
-  "millionsOfUsers": "Hàng triệu người dùng %@",
-  "millionsOfUseHighlight": "yêu thích các kế hoạch của chúng tôi",
-  "30Days": "30 Ngày Hoàn Tiền\nĐảm Bảo",
-  "weBelieve": "Chúng tôi tin rằng kế hoạch của chúng tôi sẽ phù hợp với bạn và bạn sẽ thấy kết quả rõ rệt trong 4 tuần!",
-  "weBelieve2": "Chúng tôi sẵn sàng hoàn tiền đầy đủ trong vòng 30 ngày sau khi mua nếu bạn không đạt được kết quả rõ rệt và có thể chứng minh rằng bạn đã thực hiện theo kế hoạch của chúng tôi.",
-  "yourInfoSafe": "Thông tin của bạn được bảo mật",
-  "yourInfoSafe2": "Chúng tôi sẽ không bán hoặc cho thuê thông tin liên hệ cá nhân của bạn cho bất kỳ mục đích tiếp thị nào.",
-  "secureCheckout": "Thanh toán an toàn",
-  "secureCheckout2": "Mọi thông tin đều được mã hóa và truyền tải an toàn bằng giao thức Secure Sockets Layer.",
-  "needHelp": "Cần trợ giúp?",
-  "needHelp2": "Gửi email cho chúng tôi: ",
-  "pleaseNote": "LƯU Ý: Sau ưu đãi giới thiệu, trừ khi bạn hủy trực tuyến trước khi kết thúc chu kỳ hiện tại, đăng ký của bạn sẽ tự động gia hạn và bạn sẽ bị tính phí 6,99 USD mỗi tuần với giá đầy đủ, không chiết khấu, trước khi bạn hủy. Đăng ký tự động gia hạn vào cuối mỗi chu kỳ trừ khi bạn hủy trực tuyến. Nếu bạn không chắc cách hủy, hãy truy cập Điều khoản Đăng ký của chúng tôi. Yêu cầu thanh toán trước toàn bộ chi phí kế hoạch. Bạn cần có điện thoại iOS để sử dụng đầy đủ sản phẩm. Bạn nên chụp ảnh màn hình thông tin này và lưu lại.",
-  "selectPaymentMethod": "Chọn phương thức thanh toán",
-  "debitOrCredit": "Thẻ ghi nợ hoặc thẻ tín dụng",
-  "priceToday": "Giá hôm nay:",
-  "priceTodayDes": "$0 cho 3 ngày dùng thử"
+  "yourSpecialOffer": "Your special offer is reserved for only 10 minutes",
+  "thumbTitle": "For a limited time, your Heart Health plan is saved in iCardiac Premium",
+  "checkWithBody": "Check in with your body",
+  "enableFreeTrial": "Enable Free Trial",
+  "packs": [
+    {
+      "title": "YEARLY",
+      "subtitle": "Just $99.99 per year",
+      "price": "8,6 $\nper week",
+      "productId": "price_1Rkj7QL53Ofnsx8di6gIAohJ",
+      "subtitle1": "Money-back guarantee. Cancel anytime",
+      "ctaButtonTitle": "CONTINUE"
+    },
+    {
+      "title": "WEEKLY",
+      "subtitle": "",
+      "price": "Then 12$\nper week",
+      "productId": "price_1Rkj7QL53Ofnsx8di6gIAohJ",
+      "subtitle1": "You will pay $0 for your 3-day trial, then 12$ per week.\nMoney-back guarantee. Cancel anytime",
+      "ctaButtonTitle": "START 3-DAY TRIAL"
+    }
+  ],
+  "millionsOfUsers": "Millions of users %@",
+  "millionsOfUseHighlight": "love our plans",
+  "30Days": "30 Days Money-Back\nGuarantee",
+  "weBelieve": "We believe that our plan may work for you and you'll get visiable result in 4 weeks!",
+  "weBelieve2": "We are even ready to completely refund you within 30 days after purchase if you don't get visiable results and can demonstrate that you have followed our plan.",
+  "yourInfoSafe": "Your information is safe",
+  "yourInfoSafe2": "We won’t sell or rent your personal contact information for any marketing purposes whatsoever.",
+  "secureCheckout": "Secure checkout",
+  "secureCheckout2": "All information is encrypted and transmitted without risk using a Secure Sockets Layer protocol.",
+  "needHelp": "Need help?",
+  "needHelp2": "Send us an email: ",
+  "pleaseNote": "PLEASE NOTE: After your introductory offer, unless you cancel online before the end of then-current period, your subscription will renew automatically and you will be charged $6.99, the full not discounted price each week before you cancel. Subscriptions renew automatically at the end of each period unless you cancel online. If you are unsure how to cancel, visit our Subscription Terms. Prepayment of total plan cost required. You will need an iOS mobile phone to access the full version of the product. You may want to take a screenshot of this information and save it.",
+  "selectPaymentMethod": "Select your payment method",
+  "debitOrCredit": "Debit or Credit Card",
+  "priceToday": "Price today:",
+  "priceTodayDes": "$0 for 3-day trial",
+  "comments": [
+    {
+      "title": "Fantastic Experience!",
+      "description": "This app helped me lower my blood pressure!",
+      "author": "Mark",
+      "time": "52 years old",
+      "star": 5
+    },
+    {
+      "title": "Highly Recommend!",
+      "description": "I never knew tracking my heart rate could be this easy. It keeps me motivated to stay active.",
+      "author": "David",
+      "time": "59 years old",
+      "star": 5
+    },
+    {
+      "title": "Great Support for My Health Journey!",
+      "description": "I’ve lost weight and lowered my cholesterol with the help of the health insights this app gives.",
+      "author": "Maria",
+      "time": "54 years old",
+      "star": 5
+    }
+  ]
 }

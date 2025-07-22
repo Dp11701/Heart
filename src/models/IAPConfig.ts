@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import {z} from 'zod';
 import {CommentModel} from "../screens/IAP/IAPMillionsUsersLoveUsView";
 
 export const IAPConfig = z.object({
@@ -6,13 +6,14 @@ export const IAPConfig = z.object({
     thumbTitle: z.string(),
     checkWithBody: z.string(),
     enableFreeTrial: z.string(),
-    title1: z.string(),
-    subtitle1: z.string(),
-    title2: z.string(),
-    price1: z.string(),
-    price2: z.string(),
-    subtitle2: z.string(),
-    purchaseButton: z.string(),
+    packs: z.array(z.object({
+        title: z.string(),
+        subtitle: z.string(),
+        price: z.string(),
+        productId: z.string(),
+        subtitle1: z.string().nullish().transform(e => ""),
+        ctaButtonTitle: z.string(),
+    })),
     millionsOfUsers: z.string(),
     millionsOfUseHighlight: z.string(),
     "30Days": z.string(),

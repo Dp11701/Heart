@@ -3,13 +3,24 @@
   "thumbTitle": "For a limited time, your Heart Health plan is saved in iCardiac Premium",
   "checkWithBody": "Check in with your body",
   "enableFreeTrial": "Enable Free Trial",
-  "title1": "YEARLY",
-  "subtitle1": "Just $99.99 per year",
-  "title2": "WEEKLY",
-  "subtitle2": "",
-  "price1": "8,6 $\nper week",
-  "price2": "Then 12$\nper week",
-  "purchaseButton": "START 3-DAY TRIAL",
+  "packs": [
+    {
+      "title": "YEARLY",
+      "subtitle": "Just $99.99 per year",
+      "price": "8,6 $\nper week",
+      "productId": "price_1Rkj7QL53Ofnsx8di6gIAohJ",
+      "subtitle1": "Money-back guarantee. Cancel anytime",
+      "ctaButtonTitle": "CONTINUE"
+    },
+    {
+      "title": "WEEKLY",
+      "subtitle": "",
+      "price": "Then 12$\nper week",
+      "productId": "price_1Rkj7QL53Ofnsx8di6gIAohJ",
+      "subtitle1": "You will pay $0 for your 3-day trial, then 12$ per week.\nMoney-back guarantee. Cancel anytime",
+      "ctaButtonTitle": "START 3-DAY TRIAL"
+    }
+  ],
   "millionsOfUsers": "Millions of users %@",
   "millionsOfUseHighlight": "love our plans",
   "30Days": "30 Days Money-Back\nGuarantee",

@@ -1,4 +1,4 @@
-import icAppIcon from  '../assets/icAppIconPayment.png'
+import icAppIcon from '../assets/icAppIconPayment.png'
 import icSuccess2 from '../assets/icSuccess2.png'
 import icDownloadAppStore from '../assets/icDownloadAppStore.png'
 import QRCode from 'react-qr-code';
@@ -6,7 +6,7 @@ import defaultConfig from '../configs/result.json'
 import {useEffect, useState} from "react";
 import {ResultSuccessConfig} from "../models/ResultSuccessConfig";
 import {useParams} from "react-router-dom";
-
+import {FirebaseUtils} from "../utils/FirebaseUtils";
 
 
 const APP_LINK = 'https://apps.apple.com/app/id6468660073'
@@ -89,8 +89,13 @@ export function FinalSuccessScreen() {
             }}>
                 <span style={{fontWeight: 600, textAlign: 'center'}} color={'#45454C'}>{config.step1}</span>
                 <QRCode value={APP_LINK} size={100}/>
-                <a href={APP_LINK} target={'_blank'}><img src={icDownloadAppStore} alt={''}
-                                                          style={{width: 133, aspectRatio: '133/46'}}/></a>
+                <a
+                    href={APP_LINK}
+                    onClick={() => {
+                        FirebaseUtils.trackingPayment("click_link");
+                    }}
+                    target={'_blank'}><img src={icDownloadAppStore} alt={''}
+    style={{width: 133, aspectRatio: '133/46'}}/></a>
             </div>
 
             <div style={{

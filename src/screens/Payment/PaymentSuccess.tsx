@@ -1,22 +1,34 @@
 import icAppIcon from '../../assets/icAppIconPayment.png'
 import icAppleLogo from '../../assets/icAppleLogo.png'
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import defaultConfig from '../../configs/result.json'
 import {ResultSuccessConfig} from "../../models/ResultSuccessConfig";
+import {FirebaseUtils} from "../../utils/FirebaseUtils";
+import {UserInfo} from "../../models/UserInfo";
+
+function loadUserInfo(): UserInfo {
+    try {
+        return UserInfo.parse(JSON.parse(localStorage.getItem("userInfo") || '{}'))
+    } catch (e) {
+        return UserInfo.parse({})
+    }
+}
 
 export function PaymentSuccess() {
 
     const [config, setConfig] = useState(ResultSuccessConfig.parse(defaultConfig))
-    const navigate = useNavigate()
+    const location = useLocation();
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         switchConfigs().then()
+        register().then()
     }, [])
 
     async function switchConfigs() {
         const locale = localStorage.getItem("languageCode")
-        console.log(locale)
         if (locale) {
             try {
                 const response = await fetch(`/configs/${locale}/result.json`)
@@ -33,13 +45,65 @@ export function PaymentSuccess() {
         }
     }
 
+    async function register() {
+        try {
+            const userInfo = loadUserInfo();
+            const response = await fetch(
+                `${process.env.REACT_APP_TECH_URL}/api/v1/auth/register`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "bundle_id": process.env.REACT_APP_BUNDLE_ID,
+                        "email_user_input": userInfo.email,
+                        "raw_data": userInfo,
+                        "session_id": localStorage.getItem("sessionId") || "",
+                        "type": "apple"
+                    })
+                }
+            );
+
+            const json = await response.json();
+            console.log(json);
+        } catch (error) {
+
+        }
+    }
+
 
     async function handleSignInWithApple() {
         try {
+            const userInfo = loadUserInfo()
+            const sessionId = localStorage.getItem("sessionId") || "";
+
+            FirebaseUtils.trackingPayment("sign_in")
             const data = await (window as any).AppleID.auth.signIn()
-            // Handle successful response.
+
             console.log(data)
             if (data.authorization) {
+                const code = data.authorization.code;
+                const idToken = data.authorization.id_token;
+                try {
+                    await fetch(
+                        `${process.env.REACT_APP_TECH_URL}/api/v1/user/update/${sessionId}`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                "authorization_code": code,
+                                "type": "apple"
+                            })
+                        }
+                    );
+                } catch (error) {
+                    console.error("Error during registration:", error);
+                    // Handle error appropriately, e.g., show an error message to the user.
+                    return;
+                }
                 navigate('/success')
             } else {
 

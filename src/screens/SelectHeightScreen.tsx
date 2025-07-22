@@ -125,7 +125,6 @@ export function SelectHeightScreen(props: SelectHeightScreenProps): JSX.Element 
         <ContinueButton
             disabled={!isValid}
             text={props.config.continue}
-            // additionClassName='button-animate-keyboard'
             onClick={() => {
                 props.onContinue(value, unit)
             }}

@@ -15,6 +15,8 @@ import '../styles/App.css'
 import {useNavigate, useParams} from "react-router-dom";
 import defaultConfig from '../configs/welcome.json'
 import {WelcomeConfig} from "../models/WelcomeConfig";
+import {FirebaseUtils} from "../utils/FirebaseUtils";
+
 
 function IntroScreen() {
     const { locale } = useParams();
@@ -26,7 +28,15 @@ function IntroScreen() {
 
     useEffect(() => {
         switchConfigs().then()
-    }, [locale])
+    }, [locale]);
+
+    useEffect(() => {
+        FirebaseUtils.trackingIntro('welcome');
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    }, [userInfo]);;
 
     async function switchConfigs() {
         if (locale) {
@@ -82,33 +92,54 @@ function IntroScreen() {
     function screen(step: IntroStep): JSX.Element {
         switch (step) {
             case 'WELCOME':
-                return <WelcomeScreen key={step} config={config.WELCOME} onContinue={ () => { nextStep() } } />
+                return <WelcomeScreen key={step} config={config.WELCOME} onContinue={ () => {
+                    nextStep()
+                    FirebaseUtils.trackingIntro('continue');
+                } } />
             case 'SELECT_GENDER':
                 return <SelectGenderScreen key={step} config={config.SELECT_GENDER} onSelectGender={ (gender) => {
                     setUserInfo({...userInfo, ...{ gender: gender }})
                     nextStep()
+                    FirebaseUtils.trackingIntro('gender', {
+                        gender: gender.toLowerCase()
+                    });
                 } }
                 />
             case 'SELECT_AGE':
                 return <SelectAgeScreen key={step} config={config.SELECT_AGE} onContinue={ (age) => {
                     setUserInfo({...userInfo, ...{ age: age }})
                     nextStep()
+                    FirebaseUtils.trackingIntro('age', {
+                        gender: age.toString().toLowerCase()
+                    });
                 }}
                 />
             case 'SELECT_HEIGHT':
                 return <SelectHeightScreen key={step} config={config.SELECT_HEIGHT} onContinue={ (value, unit) => {
                     setUserInfo({ ...userInfo, ...{ height: value, heightUnit: unit} })
                     nextStep()
+                    FirebaseUtils.trackingIntro('body_metric', {
+                        height: value.toString(),
+                        length_unit: unit.toString(),
+                        weight: userInfo.weight?.toString() ?? "null",
+                        weight_unit: userInfo.weightUnit?.toString() ?? "null"
+                    });
                 }}
                 />
             case 'SELECT_WEIGHT':
                 return <SelectWeightScreen key={step} config={config.SELECT_WEIGHT} onContinue={ (value, unit) => {
                     setUserInfo({ ...userInfo, ...{ weight: value, weightUnit: unit} })
-                    nextStep() }}
+                    nextStep()
+                }}
                 />
 
             case 'OVERVIEW_INFO':
-                return <BMIScreen config={config.OVERVIEW_INFO} userInfo={userInfo} onContinue={ () => { nextStep() }}/>
+                return <BMIScreen config={config.OVERVIEW_INFO} userInfo={userInfo} onContinue={ () => {
+                    nextStep()
+                    FirebaseUtils.trackingIntro('bmi', {
+                        status: bmiStatus()
+                    });
+                }}/>
 
             case 'SELECT_CHOLESTEROL':
                 return <SelectRadioView
@@ -117,6 +148,9 @@ function IntroScreen() {
                     onPickOption= { (option) => {
                         setUserInfo({...userInfo, ...{ cholesterolOption: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('cholesterol', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -127,6 +161,9 @@ function IntroScreen() {
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ bloodPressureReading: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('blood_pressure_level', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -137,6 +174,9 @@ function IntroScreen() {
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ hypertensionOption: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('hypertension', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -147,6 +187,9 @@ function IntroScreen() {
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ highBloodPressureOption: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('blood_pressure_medication', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -157,6 +200,9 @@ function IntroScreen() {
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ activityLevelOption: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('physical_activity_level', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -167,6 +213,9 @@ function IntroScreen() {
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ sleepDailyOption: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('sleep_duration', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -177,6 +226,9 @@ function IntroScreen() {
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ smokeHistory: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('smoke', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -187,6 +239,9 @@ function IntroScreen() {
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ drinkAlcoholOption: option }})
                         nextStep()
+                        FirebaseUtils.trackingIntro('drink_alcohol', {
+                            status: option
+                        });
                     }}
                 />
 
@@ -194,15 +249,41 @@ function IntroScreen() {
                 return <AnalyzingScreen config={config.ANALYZING} onContinue={ () => {
                     console.log(userInfo)
                     nextStep()
+                    FirebaseUtils.trackingIntro('analyzing');
                 }}/>
 
             case 'SEND_EMAIL':
                 return <EmailScreen config={config.SEND_EMAIL} onContinue={ (email) => {
                     setUserInfo({...userInfo, ...{ email: email }})
                     navigate('/purchase')
+                    FirebaseUtils.trackingIntro('email', {
+                        user_email: email
+                    });
+                    FirebaseUtils.trackingPayment('email', {
+                        user_email: email
+                    });
                 }}/>
             default:
                 return <></>
+        }
+    }
+
+    function bmiStatus() {
+        if (!userInfo.height || !userInfo.weight) {
+            return 'unknown';
+        }
+        const heightInKg = userInfo.heightUnit == 'ft' ? userInfo.height * 0.3048 : userInfo.height;
+        const weightInKg = userInfo.weightUnit == 'lbs' ? userInfo.weight * 0.453592 : userInfo.weight;
+
+        const bmi = weightInKg / (heightInKg * heightInKg);
+        if (bmi < 18.5) {
+            return 'underweight';
+        } else if (bmi < 24.9) {
+            return 'normal';
+        } else if (bmi < 29.9) {
+            return 'overweight';
+        } else {
+            return 'obese';
         }
     }
 

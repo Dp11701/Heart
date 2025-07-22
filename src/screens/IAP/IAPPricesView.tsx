@@ -1,10 +1,9 @@
 import ReactSwitch from "react-switch";
 import {useState} from "react";
 import {IAPPackModel} from "../../models/IAPPackModel";
-import {useStripe} from "@stripe/react-stripe-js";
 import {useNavigate} from "react-router-dom";
-import {IAPPaymentButton} from "./IAPPaymentButton";
 import {IAPConfig} from "../../models/IAPConfig";
+import {IAPPaymentButton} from "./IAPPaymentButton";
 
 interface IAPPricesViewProps {
     pack: IAPPackModel
@@ -84,13 +83,13 @@ export function IAPPricesView(props: { config: IAPConfig }) {
             <span style={{fontWeight: 500, color: '#7D8296'}}>{props.config.enableFreeTrial}</span>
 
             <ReactSwitch
-                checked={selectedPackIndex === 0}
+                checked={selectedPackIndex === 1}
                 checkedIcon={false}
                 uncheckedIcon={false}
                 onColor={'#FF3D60'}
                 activeBoxShadow={'0px 0px 2px 3px #FF3D60'}
                 onChange={(checked, evnet, id) => {
-                    setSelectedPackIndex(checked ? 0 : 1)
+                    setSelectedPackIndex(checked ? 1 : 0)
                 }}/>
         </div>
 
@@ -100,9 +99,9 @@ export function IAPPricesView(props: { config: IAPConfig }) {
                 setSelectedPackIndex(0)
             }}
             pack={{
-                title: props.config.title1,
-                priceTitle: props.config.price1,
-                subTitle: props.config.subtitle1,
+                title: props.config.packs[0].title,
+                priceTitle: props.config.packs[0].price,
+                subTitle: props.config.packs[0].subtitle,
             }}/>
 
         <IAPPackView
@@ -111,16 +110,16 @@ export function IAPPricesView(props: { config: IAPConfig }) {
                 setSelectedPackIndex(1)
             }}
             pack={{
-                title: props.config.title2,
-                priceTitle: props.config.price2,
-                subTitle: props.config.subtitle2
+                title: props.config.packs[1].title,
+                priceTitle: props.config.packs[1].price,
+                subTitle: props.config.packs[1].subtitle,
             }}/>
-        <IAPPaymentButton config={props.config}/>
+        <IAPPaymentButton config={props.config} selectedPackIndex={selectedPackIndex}/>
         <span style={{
             fontSize: 15,
             whiteSpace: 'pre-line',
             lineHeight: 1.8,
             textAlign: 'center'
-        }}>{`You will pay $0 for your 3-day trial, then 6,99 per week.\nMoney-back guarantee. Cancel anytime`}</span>
+        }}>{props.config.packs[selectedPackIndex].subtitle1}</span>
     </div>
 }
