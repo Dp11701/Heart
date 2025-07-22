@@ -1,36 +1,66 @@
-import {z} from "zod";
 import {ValueConfig} from "../models/ValueConfig";
-import defaultValueConfig from '../configs/value_config.json'
+import {IAPConfig} from "../models/IAPConfig";
+import {ResultSuccessConfig} from "../models/ResultSuccessConfig";
+import {WelcomeConfig} from "../models/WelcomeConfig";
 
-export const EnumOS = z.enum([
-    'Android', 'iOS', 'macOS', 'Windows', 'Unknown', 'Windows Phone'
-])
-export type EnumOS = z.infer<typeof EnumOS>
+import defaultValueConfig from '../configs/value_config.json'
+import defaultIAPConfig from '../configs/iap.json'
+import defaultResultConfig from '../configs/result.json'
+import defaultWebsiteConfig from '../configs/welcome.json'
 
 export class Utils {
-    static getOS() : EnumOS {
-        const userAgent = window.navigator.userAgent || window.navigator.vendor;
 
-        if (/windows phone/i.test(userAgent)) {
-            return "Windows Phone";
-        }
-        if (/android/i.test(userAgent)) {
-            return "Android";
-        }
-        if (/iPad|iPhone|iPod/.test(userAgent)) {
-            return "iOS";
-        }
-        if (/Macintosh/.test(userAgent)) {
-            return "macOS";
-        }
-        if (/Windows/.test(userAgent)) {
-            return "Windows";
-        }
-        return "Unknown";
+    defaultValueConfig: ValueConfig = ValueConfig.parse(defaultValueConfig);
+    defaultIAPConfig: IAPConfig = IAPConfig.parse(defaultIAPConfig);
+    defaultResultConfig: ResultSuccessConfig = ResultSuccessConfig.parse(defaultResultConfig);
+    defaultWebsiteConfig: WelcomeConfig = WelcomeConfig.parse(defaultWebsiteConfig);
+
+    constructor() {
+        this.welcomeConfig().then(e => { this.defaultWebsiteConfig = e; });
+        this.valueConfig().then(e => { this.defaultValueConfig = e; });
+        this.resultConfig().then(e => { this.defaultResultConfig = e; });
+        this.iapConfig().then(e => { this.defaultIAPConfig = e; });
     }
 
-    static valueConfig(): ValueConfig {
-        return ValueConfig.parse(defaultValueConfig);
+    static shared: Utils = new Utils();
+
+    async welcomeConfig(languageCode: string | null | undefined = null) {
+        const lang = languageCode || localStorage.getItem("languageCode") || 'default';
+        try {
+            const rp = await fetch(`${process.env.PUBLIC_URL}/configs/${lang}/welcome.json`)
+            return WelcomeConfig.parse(await rp.json());
+        } catch (e) {
+            return this.defaultWebsiteConfig;
+        }
     }
 
+    async valueConfig(languageCode: string | null | undefined = null) {
+        const lang = languageCode || localStorage.getItem("languageCode") || 'default';
+        try {
+            const rp = await fetch(`${process.env.PUBLIC_URL}/configs/${lang}/value_config.json`)
+            return ValueConfig.parse(await rp.json());
+        } catch (e) {
+            return this.defaultValueConfig;
+        }
+    }
+
+    async resultConfig(languageCode: string | null | undefined = null) {
+        const lang = languageCode || localStorage.getItem("languageCode") || 'default';
+        try {
+            const rp = await fetch(`${process.env.PUBLIC_URL}/configs/${lang}/result.json`)
+            return ResultSuccessConfig.parse(await rp.json());
+        } catch (e) {
+            return this.defaultResultConfig;
+        }
+    }
+
+    async iapConfig(languageCode: string | null | undefined = null) {
+        const lang = languageCode || localStorage.getItem("languageCode") || 'default';
+        try {
+            const rp = await fetch(`${process.env.PUBLIC_URL}/configs/${lang}/iap.json`)
+            return IAPConfig.parse(await rp.json());
+        } catch (e) {
+            return this.defaultIAPConfig;
+        }
+    }
 }

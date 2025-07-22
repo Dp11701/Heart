@@ -4,21 +4,21 @@ import '../styles/SelectAgeScreen.css'
 import ContinueButton from "../components/ContinueButton";
 import {TextInputView} from "../components/TextInputView";
 import {SelectInputValueSchema} from "../models/WelcomeConfig";
-import {Utils} from "../utils/Utils";
+import {ValueConfigItem} from "../models/ValueConfig";
 
-const ageConfig = Utils.valueConfig().age;
 
 export interface SelectAgeScreenProps {
     config: SelectInputValueSchema,
+    ageConfig: ValueConfigItem[],
     onContinue: (age: number) => void
 }
 
 function SelectAgeScreen(props: SelectAgeScreenProps): JSX.Element {
 
     const [value, setValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(ageConfig[0]?.max || 95);
-    const [minValue, setMinValue] = useState(ageConfig[0]?.min || 20);
-    const [idealValue, setIdealValue] = useState(ageConfig[0]?.ideal || 30);
+    const [maxValue, setMaxValue] = useState(props.ageConfig[0]?.max || 95);
+    const [minValue, setMinValue] = useState(props.ageConfig[0]?.min || 20);
+    const [idealValue, setIdealValue] = useState(props.ageConfig[0]?.ideal || 30);
     const [isValid, setIsValid] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
@@ -79,7 +79,7 @@ function SelectAgeScreen(props: SelectAgeScreenProps): JSX.Element {
                             <span key={idx}>
                                 <span>{part}</span>
                                 {idx < 2 && (
-                                    <span style={{fontWeight: 'bold'}}>{[ageConfig[0].min, ageConfig[0].max][idx]}</span>
+                                    <span style={{fontWeight: 'bold'}}>{[props.ageConfig[0].min, props.ageConfig[0].max][idx]}</span>
                                 )}
                             </span>
                         )

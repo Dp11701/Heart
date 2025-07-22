@@ -2,43 +2,61 @@ import icAppIcon from '../assets/icAppIconPayment.png'
 import icSuccess2 from '../assets/icSuccess2.png'
 import icDownloadAppStore from '../assets/icDownloadAppStore.png'
 import QRCode from 'react-qr-code';
-import defaultConfig from '../configs/result.json'
 import {useEffect, useState} from "react";
-import {ResultSuccessConfig} from "../models/ResultSuccessConfig";
-import {useParams} from "react-router-dom";
 import {FirebaseUtils} from "../utils/FirebaseUtils";
-
-
-const APP_LINK = 'https://apps.apple.com/app/id6468660073'
+import {Utils} from "../utils/Utils";
 
 
 export function FinalSuccessScreen() {
 
-    const { languageId } = useParams()
-
-    const [config, setConfig] = useState(ResultSuccessConfig.parse(defaultConfig))
+    const [config, setConfig] = useState(Utils.shared.defaultResultConfig)
 
     async function switchConfigs() {
         const locale = localStorage.getItem("languageCode")
         if (locale) {
             try {
-                const response = await fetch(`/configs/${locale}/result.json`)
-                const json = await response.json();
-                const parsed = ResultSuccessConfig.parse(json);
-                setConfig(parsed);
+                const response = await Utils.shared.resultConfig(locale);
+                setConfig(response);
             } catch {
                 localStorage.removeItem("languageCode");
-                setConfig(defaultConfig);
+                setConfig(Utils.shared.defaultResultConfig);
             }
         } else {
             localStorage.removeItem("languageCode");
-            setConfig(defaultConfig);
+            setConfig(Utils.shared.defaultResultConfig);
         }
     }
 
     useEffect(() => {
         switchConfigs().then()
+        save().then()
     }, [])
+
+
+    async function save() {
+        const sessionId = localStorage.getItem("sessionId") || "";
+        const code = localStorage.getItem("authorization_code") || "";
+        localStorage.removeItem("authorization_code");
+        try {
+            await fetch(
+                `${process.env.REACT_APP_TECH_URL}/api/v1/user/update/${sessionId}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "authorization_code": code,
+                        "type": "apple"
+                    })
+                }
+            );
+        } catch (error) {
+            console.error("Error during registration:", error);
+            // Handle error appropriately, e.g., show an error message to the user.
+            return;
+        }
+    }
 
     return <div style={{
         display: 'flex',
@@ -88,9 +106,9 @@ export function FinalSuccessScreen() {
                 justifyContent: 'center',
             }}>
                 <span style={{fontWeight: 600, textAlign: 'center'}} color={'#45454C'}>{config.step1}</span>
-                <QRCode value={APP_LINK} size={100}/>
+                <QRCode value={process.env.REACT_APP_APP_LINK || ""} size={100}/>
                 <a
-                    href={APP_LINK}
+                    href={process.env.REACT_APP_APP_LINK}
                     onClick={() => {
                         FirebaseUtils.trackingPayment("click_link");
                     }}

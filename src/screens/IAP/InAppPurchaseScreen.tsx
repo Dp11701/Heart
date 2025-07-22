@@ -7,28 +7,25 @@ import {IAPMillionsUsersLoveUsView} from "./IAPMillionsUsersLoveUsView";
 import {IAPGuaranteeView} from "./IAPGuaranteeView";
 import {useEffect, useState} from "react";
 import Modal from "react-modal";
-import defaultConfig from '../../configs/iap.json'
-import {IAPConfig} from "../../models/IAPConfig";
+import {Utils} from "../../utils/Utils";
 
 export function InAppPurchaseScreen() {
-    const [config, setConfig] = useState(IAPConfig.parse(defaultConfig));
+    const [config, setConfig] = useState(Utils.shared.defaultIAPConfig);
 
     async function switchConfigs() {
         const locale = localStorage.getItem("languageCode")
         console.log(locale)
         if (locale) {
             try {
-                const response = await fetch(`/configs/${locale}/iap.json`)
-                const json = await response.json();
-                const parsed = IAPConfig.parse(json);
-                setConfig(parsed);
+                const response = await Utils.shared.iapConfig(locale);
+                setConfig(response);
             } catch {
                 localStorage.removeItem("languageCode");
-                setConfig(defaultConfig);
+                setConfig(Utils.shared.defaultIAPConfig);
             }
         } else {
             localStorage.removeItem("languageCode");
-            setConfig(defaultConfig);
+            setConfig(Utils.shared.defaultIAPConfig);
         }
     }
 

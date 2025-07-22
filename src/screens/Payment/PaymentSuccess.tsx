@@ -2,10 +2,9 @@ import icAppIcon from '../../assets/icAppIconPayment.png'
 import icAppleLogo from '../../assets/icAppleLogo.png'
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import defaultConfig from '../../configs/result.json'
-import {ResultSuccessConfig} from "../../models/ResultSuccessConfig";
 import {FirebaseUtils} from "../../utils/FirebaseUtils";
 import {UserInfo} from "../../models/UserInfo";
+import {Utils} from "../../utils/Utils";
 
 function loadUserInfo(): UserInfo {
     try {
@@ -17,7 +16,7 @@ function loadUserInfo(): UserInfo {
 
 export function PaymentSuccess() {
 
-    const [config, setConfig] = useState(ResultSuccessConfig.parse(defaultConfig))
+    const [config, setConfig] = useState(Utils.shared.defaultResultConfig)
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -31,17 +30,15 @@ export function PaymentSuccess() {
         const locale = localStorage.getItem("languageCode")
         if (locale) {
             try {
-                const response = await fetch(`/configs/${locale}/result.json`)
-                const json = await response.json();
-                const parsed = ResultSuccessConfig.parse(json);
-                setConfig(parsed);
+                const response = await Utils.shared.resultConfig(locale);
+                setConfig(response);
             } catch {
                 localStorage.removeItem("languageCode");
-                setConfig(defaultConfig);
+                setConfig(Utils.shared.defaultResultConfig);
             }
         } else {
             localStorage.removeItem("languageCode");
-            setConfig(defaultConfig);
+            setConfig(Utils.shared.defaultResultConfig);
         }
     }
 
@@ -56,7 +53,7 @@ export function PaymentSuccess() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        "bundle_id": process.env.REACT_APP_BUNDLE_ID,
+                        "bundle_id": "com.pulse.heartkit",
                         "email_user_input": userInfo.email,
                         "raw_data": userInfo,
                         "session_id": localStorage.getItem("sessionId") || "",
@@ -76,8 +73,6 @@ export function PaymentSuccess() {
     async function handleSignInWithApple() {
         try {
             const userInfo = loadUserInfo()
-            const sessionId = localStorage.getItem("sessionId") || "";
-
             FirebaseUtils.trackingPayment("sign_in")
             const data = await (window as any).AppleID.auth.signIn()
 
@@ -85,31 +80,13 @@ export function PaymentSuccess() {
             if (data.authorization) {
                 const code = data.authorization.code;
                 const idToken = data.authorization.id_token;
-                try {
-                    await fetch(
-                        `${process.env.REACT_APP_TECH_URL}/api/v1/user/update/${sessionId}`,
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                "authorization_code": code,
-                                "type": "apple"
-                            })
-                        }
-                    );
-                } catch (error) {
-                    console.error("Error during registration:", error);
-                    // Handle error appropriately, e.g., show an error message to the user.
-                    return;
-                }
-                navigate('/success')
+                localStorage.setItem("authorization_code", code);
+                navigate("/success")
             } else {
 
             }
         } catch ( error ) {
-
+            console.error("Error during registration:", error);
         }
     }
 

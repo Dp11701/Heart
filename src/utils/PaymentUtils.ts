@@ -10,7 +10,7 @@ export class PaymentUtils {
                         "price": "price_1Rkj7QL53Ofnsx8di6gIAohJ",
                         "quantity": 1
                     }
-                ], "return_url": "http://localhost:3000/payment-result"
+                ], "return_url": `${process.env.REACT_APP_WEB_PAGE_URL}/payment-result`
             }
         }
 

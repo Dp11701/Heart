@@ -13,18 +13,19 @@ import {EmailScreen} from "./EmailScreen";
 import {UserInfo} from "../models/UserInfo";
 import '../styles/App.css'
 import {useNavigate, useParams} from "react-router-dom";
-import defaultConfig from '../configs/welcome.json'
-import {WelcomeConfig} from "../models/WelcomeConfig";
 import {FirebaseUtils} from "../utils/FirebaseUtils";
+import {Utils} from "../utils/Utils";
 
 
 function IntroScreen() {
+
     const { locale } = useParams();
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState<UserInfo>(UserInfo.parse({}));
     const [step, setStep] = useState(IntroStep.parse('WELCOME'));
 
-    const [config, setConfig] = useState(WelcomeConfig.parse(defaultConfig));
+    const [valueConfig, setValueConfig] = useState(Utils.shared.defaultValueConfig);
+    const [welcomeConfig, setWelcomeConfig] = useState(Utils.shared.defaultWebsiteConfig);
 
     useEffect(() => {
         switchConfigs().then()
@@ -41,18 +42,16 @@ function IntroScreen() {
     async function switchConfigs() {
         if (locale) {
             try {
-                const response = await fetch(`/configs/${locale}/welcome.json`)
-                const json = await response.json();
-                const parsed = WelcomeConfig.parse(json);
+                const response = await Utils.shared.welcomeConfig(locale);
                 localStorage.setItem("languageCode", locale)
-                setConfig(parsed);
+                setWelcomeConfig(response);
             } catch {
                 localStorage.removeItem("languageCode");
-                setConfig(defaultConfig);
+                setWelcomeConfig(Utils.shared.defaultWebsiteConfig);
             }
         } else {
             localStorage.removeItem("languageCode");
-            setConfig(defaultConfig);
+            setWelcomeConfig(Utils.shared.defaultWebsiteConfig);
         }
     }
 
@@ -92,12 +91,12 @@ function IntroScreen() {
     function screen(step: IntroStep): JSX.Element {
         switch (step) {
             case 'WELCOME':
-                return <WelcomeScreen key={step} config={config.WELCOME} onContinue={ () => {
+                return <WelcomeScreen key={step} config={welcomeConfig.WELCOME} onContinue={ () => {
                     nextStep()
                     FirebaseUtils.trackingIntro('continue');
                 } } />
             case 'SELECT_GENDER':
-                return <SelectGenderScreen key={step} config={config.SELECT_GENDER} onSelectGender={ (gender) => {
+                return <SelectGenderScreen key={step} config={welcomeConfig.SELECT_GENDER} onSelectGender={ (gender) => {
                     setUserInfo({...userInfo, ...{ gender: gender }})
                     nextStep()
                     FirebaseUtils.trackingIntro('gender', {
@@ -106,7 +105,7 @@ function IntroScreen() {
                 } }
                 />
             case 'SELECT_AGE':
-                return <SelectAgeScreen key={step} config={config.SELECT_AGE} onContinue={ (age) => {
+                return <SelectAgeScreen key={step} config={welcomeConfig.SELECT_AGE} ageConfig={valueConfig.age} onContinue={ (age) => {
                     setUserInfo({...userInfo, ...{ age: age }})
                     nextStep()
                     FirebaseUtils.trackingIntro('age', {
@@ -115,7 +114,7 @@ function IntroScreen() {
                 }}
                 />
             case 'SELECT_HEIGHT':
-                return <SelectHeightScreen key={step} config={config.SELECT_HEIGHT} onContinue={ (value, unit) => {
+                return <SelectHeightScreen key={step} config={welcomeConfig.SELECT_HEIGHT} heightConfig={valueConfig.height} onContinue={ (value, unit) => {
                     setUserInfo({ ...userInfo, ...{ height: value, heightUnit: unit} })
                     nextStep()
                     FirebaseUtils.trackingIntro('body_metric', {
@@ -127,14 +126,14 @@ function IntroScreen() {
                 }}
                 />
             case 'SELECT_WEIGHT':
-                return <SelectWeightScreen key={step} config={config.SELECT_WEIGHT} onContinue={ (value, unit) => {
+                return <SelectWeightScreen key={step} config={welcomeConfig.SELECT_WEIGHT} weightConfig={valueConfig.weight} onContinue={ (value, unit) => {
                     setUserInfo({ ...userInfo, ...{ weight: value, weightUnit: unit} })
                     nextStep()
                 }}
                 />
 
             case 'OVERVIEW_INFO':
-                return <BMIScreen config={config.OVERVIEW_INFO} userInfo={userInfo} onContinue={ () => {
+                return <BMIScreen config={welcomeConfig.OVERVIEW_INFO} userInfo={userInfo} onContinue={ () => {
                     nextStep()
                     FirebaseUtils.trackingIntro('bmi', {
                         status: bmiStatus()
@@ -144,7 +143,7 @@ function IntroScreen() {
             case 'SELECT_CHOLESTEROL':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_CHOLESTEROL}
+                    options={welcomeConfig.SELECT_CHOLESTEROL}
                     onPickOption= { (option) => {
                         setUserInfo({...userInfo, ...{ cholesterolOption: option }})
                         nextStep()
@@ -157,7 +156,7 @@ function IntroScreen() {
             case 'SELECT_BLOOD_PRESSURE':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_BLOOD_PRESSURE}
+                    options={welcomeConfig.SELECT_BLOOD_PRESSURE}
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ bloodPressureReading: option }})
                         nextStep()
@@ -170,7 +169,7 @@ function IntroScreen() {
             case 'SELECT_HYPERTENSION':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_HYPERTENSION}
+                    options={welcomeConfig.SELECT_HYPERTENSION}
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ hypertensionOption: option }})
                         nextStep()
@@ -183,7 +182,7 @@ function IntroScreen() {
             case 'SELECT_HIGH_BLOOD_PRESSURE':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_HIGH_BLOOD_PRESSURE}
+                    options={welcomeConfig.SELECT_HIGH_BLOOD_PRESSURE}
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ highBloodPressureOption: option }})
                         nextStep()
@@ -196,7 +195,7 @@ function IntroScreen() {
             case 'SELECT_ACTIVITY_LEVEL':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_ACTIVITY_LEVEL}
+                    options={welcomeConfig.SELECT_ACTIVITY_LEVEL}
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ activityLevelOption: option }})
                         nextStep()
@@ -209,7 +208,7 @@ function IntroScreen() {
             case 'SELECT_SLEEP':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_SLEEP}
+                    options={welcomeConfig.SELECT_SLEEP}
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ sleepDailyOption: option }})
                         nextStep()
@@ -222,7 +221,7 @@ function IntroScreen() {
             case 'SELECT_SMOKING_HISTORY':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_SMOKING_HISTORY}
+                    options={welcomeConfig.SELECT_SMOKING_HISTORY}
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ smokeHistory: option }})
                         nextStep()
@@ -235,7 +234,7 @@ function IntroScreen() {
             case 'SELECT_ALCOHOL':
                 return <SelectRadioView
                     key={step}
-                    options={config.SELECT_ALCOHOL}
+                    options={welcomeConfig.SELECT_ALCOHOL}
                     onPickOption={ (option) => {
                         setUserInfo({...userInfo, ...{ drinkAlcoholOption: option }})
                         nextStep()
@@ -246,14 +245,14 @@ function IntroScreen() {
                 />
 
             case 'ANALYZING':
-                return <AnalyzingScreen config={config.ANALYZING} onContinue={ () => {
+                return <AnalyzingScreen config={welcomeConfig.ANALYZING} onContinue={ () => {
                     console.log(userInfo)
                     nextStep()
                     FirebaseUtils.trackingIntro('analyzing');
                 }}/>
 
             case 'SEND_EMAIL':
-                return <EmailScreen config={config.SEND_EMAIL} onContinue={ (email) => {
+                return <EmailScreen config={welcomeConfig.SEND_EMAIL} onContinue={ (email) => {
                     setUserInfo({...userInfo, ...{ email: email }})
                     navigate('/purchase')
                     FirebaseUtils.trackingIntro('email', {

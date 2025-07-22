@@ -13,4 +13,5 @@ export const ValueConfig = z.object({
     age: ValueConfigItem.array(),
 })
 
+export type ValueConfigItem = z.infer<typeof ValueConfigItem>;
 export type ValueConfig = z.infer<typeof ValueConfig>;
