@@ -3,6 +3,8 @@ import {IAPConfig} from "../../models/IAPConfig";
 import {FirebaseUtils} from "../../utils/FirebaseUtils";
 import {PaymentUtils} from "../../utils/PaymentUtils";
 import {ClipLoader} from "react-spinners";
+import {toast, ToastContainer} from 'react-toastify';
+
 
 export function IAPPaymentButton(props: { config: IAPConfig, selectedPackIndex: number }) {
 
@@ -27,15 +29,21 @@ export function IAPPaymentButton(props: { config: IAPConfig, selectedPackIndex: 
                 }}
                 disabled={isLoading}
                 onClick={async () => {
-                    setIsLoading(true);
-                    FirebaseUtils.trackingPayment('sales', {
-                        product_id: props.config.packs[props.selectedPackIndex].productId,
-                        price: props.config.packs[props.selectedPackIndex].price,
-                        currency: "",
-                        subscription: "1"
-                    });
-                    await PaymentUtils.checkOut()
-                    setIsLoading(false);
+                    if (isLoading) return;
+                    try {
+                        setIsLoading(true);
+                        FirebaseUtils.trackingPayment('sales', {
+                            product_id: props.config.packs[props.selectedPackIndex].productId,
+                            price: props.config.packs[props.selectedPackIndex].price,
+                            currency: "",
+                            subscription: "1"
+                        });
+                        await PaymentUtils.checkOut()
+                        setIsLoading(false);
+                    } catch (e) {
+                        setIsLoading(false);
+                        toast.error('Payment error. Please try again later.');
+                    }
                 }}
             >
                 {
@@ -47,6 +55,7 @@ export function IAPPaymentButton(props: { config: IAPConfig, selectedPackIndex: 
                     }}>{props.config.packs[props.selectedPackIndex].ctaButtonTitle}</span>
                 }
             </button>
+            <ToastContainer position={'top-center'} autoClose={2000} hideProgressBar={true} closeOnClick={true} />
         </div>
     );
 }

@@ -15,7 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-
 export class FirebaseUtils {
     static trackingIntro(actionName: string, extraInfo: Record<string, string> = {}) {
         const defaultInfo = {

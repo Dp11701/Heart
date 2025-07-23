@@ -21,7 +21,11 @@ const PaymentResultScreen = () => {
                 status: "failed",
                 reason: status || "unknown",
             })
-            navigate("/purchase");
+            if (status === "cancel") {
+                navigate("/success-payment-cancel");
+            } else {
+                navigate("/purchase");
+            }
         }
     }, [location, navigate]);
 
