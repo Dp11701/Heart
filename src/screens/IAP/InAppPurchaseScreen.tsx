@@ -14,7 +14,6 @@ export function InAppPurchaseScreen() {
 
     async function switchConfigs() {
         const locale = localStorage.getItem("languageCode")
-        console.log(locale)
         if (locale) {
             try {
                 const response = await Utils.shared.iapConfig(locale);

@@ -66,7 +66,6 @@ export function PaymentSuccess() {
             );
 
             const json = await response.json();
-            console.log(json);
         } catch (error) {
 
         }
@@ -79,7 +78,6 @@ export function PaymentSuccess() {
             FirebaseUtils.trackingPayment("sign_in")
             const data = await (window as any).AppleID.auth.signIn()
 
-            console.log(data)
             if (data.authorization) {
                 const code = data.authorization.code;
                 const idToken = data.authorization.id_token;

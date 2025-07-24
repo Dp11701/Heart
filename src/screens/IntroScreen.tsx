@@ -246,7 +246,6 @@ function IntroScreen() {
 
             case 'ANALYZING':
                 return <AnalyzingScreen config={welcomeConfig.ANALYZING} onContinue={ () => {
-                    console.log(userInfo)
                     nextStep()
                     FirebaseUtils.trackingIntro('analyzing');
                 }}/>

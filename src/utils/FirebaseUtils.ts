@@ -22,7 +22,6 @@ export class FirebaseUtils {
             action_name: actionName
         }
         const params = {...defaultInfo, ...extraInfo};
-        console.log(`[FirebaseUtils.trackingIntro] ${JSON.stringify(params)}`);
         logEvent(analytics, "tracking_web", params);
     }
 
@@ -32,7 +31,6 @@ export class FirebaseUtils {
             action_name: actionName
         }
         const params = {...defaultInfo, ...extraInfo};
-        console.log(`[FirebaseUtils.trackingPayment] ${JSON.stringify(params)}`);
         logEvent(analytics, "tracking_web", params);
     }
 }

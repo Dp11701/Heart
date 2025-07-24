@@ -92,7 +92,6 @@ export function SelectWeightScreen(props: SelectWeightScreenProps): JSX.Element 
             max={maxValue}
             currentValue={inputValue}
             onChangeValue={(newValue: string) => {
-                console.log(newValue)
                 setInputValue(newValue)
                 checkValid(newValue, minValue, maxValue)
             }}

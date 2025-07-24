@@ -1,4 +1,3 @@
-
 import '../styles/TextInputView.css'
 import '../styles/SelectAgeScreen.css'
 import {CSSProperties, useEffect, useRef} from "react";
@@ -47,7 +46,6 @@ export function TextInputView(props: TextInputViewProps) {
                         props.onChangeValue(e.target.value)
                     }}
                     onKeyDown={(e) => {
-                        console.log(e.key)
                         if (e.key === 'Enter') {
                             (e.target as any).blur?.(); // Bắt buộc mất focus → kích hoạt onBlur
                         }

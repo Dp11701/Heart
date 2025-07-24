@@ -2,7 +2,6 @@ import {HTMLAttributes, useEffect, useState} from "react";
 
 import '../styles/SelectRadioView.css'
 import '../styles/Common.css'
-import {RadioOptions} from "../models/Constants";
 import {SelectSchema} from "../models/WelcomeConfig";
 
 interface SelectRadioItemProps extends HTMLAttributes<HTMLElement>{
