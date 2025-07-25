@@ -37,6 +37,7 @@ export function FinalSuccessScreen() {
         const sessionId = localStorage.getItem("sessionId") || "";
         const code = localStorage.getItem("authorization_code") || "";
         localStorage.removeItem("authorization_code");
+        localStorage.removeItem("sessionId");
         try {
             await fetch(
                 `${process.env.REACT_APP_TECH_URL}/api/v1/user/update/${sessionId}`,

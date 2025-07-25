@@ -24,9 +24,6 @@ export function PaymentSuccess() {
     useEffect(() => {
         switchConfigs().then()
         register().then()
-
-        localStorage.removeItem("sessionId")
-        localStorage.removeItem("authorization_code");
     }, [])
 
     async function switchConfigs() {
