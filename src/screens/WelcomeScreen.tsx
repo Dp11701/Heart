@@ -14,8 +14,8 @@ function WelcomeScreen(props: {
   onContinue: () => void;
 }) {
   return (
-    <div className="flex flex-col items-center mb-8 h-full justify-between overflow-y-auto">
-      <div className="flex flex-col items-center justify-center gap-4 h-full">
+    <div className="screen-container">
+      <div className="screen-content flex flex-col items-center justify-center gap-4">
         <Image
           src={heartRate}
           alt="heartRate"

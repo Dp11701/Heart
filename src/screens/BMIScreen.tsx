@@ -169,41 +169,43 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
   const userInfoDisplay = getUserInfoDisplay(userInfo);
 
   return (
-    <div className="flex flex-col h-full mb-8 overflow-y-auto ">
-      <Typography className="text-center text-[#2D3142] font-[600] text-[20px] leading-[32px] px-5 mb-10">
-        Your Personal Summary
-      </Typography>
-
-      <Image
-        src={doctor}
-        alt="doctor"
-        className="w-full h-full object-cover object-left"
-        preview={false}
-      />
-
-      <div className="flex flex-col items-center  mb-8 bg-[#FFFFFF] mx-5 rounded-[16px] pb-4">
-        <BMIResult w={weightInKg} h={heightInCm} />
-        <Typography className="text-center text-[#61697F] font-[400] text-[14px] leading-[20px] px-5 my-2">
-          Your BMI is within a healthy range. Remember maintaining healthy
-          habits.
+    <div className="screen-container">
+      <div className="screen-content">
+        <Typography className="text-center text-[#2D3142] font-[600] text-[20px] leading-[32px] px-5 mb-10">
+          Your Personal Summary
         </Typography>
-        <div className="flex flex-col w-full px-5  gap-4 ">
-          {userInfoDisplay.map((item, index) => (
-            <div
-              key={index}
-              className="flex gap-2 items-center justify-start px-3 bg-[#F4F6FA] rounded-[16px] "
-            >
-              <img src={iconMap[item.getIcon(userInfo)]} alt={item.label} />
-              <div className="flex flex-col gap-2 justify-start items-start">
-                <Typography className="text-[14px] text-[#9C9EB9] font-[400] leading-[20px]">
-                  {item.label}
-                </Typography>
-                <Typography className="font-[500] text-[14px] leading-[20px] text-[#2D3142]">
-                  {item.getValue(userInfo)}
-                </Typography>
+
+        <Image
+          src={doctor}
+          alt="doctor"
+          className="w-full h-full object-cover object-left"
+          preview={false}
+        />
+
+        <div className="flex flex-col items-center mb-8 bg-[#FFFFFF] mx-5 rounded-[16px] pb-4">
+          <BMIResult w={weightInKg} h={heightInCm} />
+          <Typography className="text-center text-[#61697F] font-[400] text-[14px] leading-[20px] px-5 my-2">
+            Your BMI is within a healthy range. Remember maintaining healthy
+            habits.
+          </Typography>
+          <div className="flex flex-col w-full px-5 gap-4">
+            {userInfoDisplay.map((item, index) => (
+              <div
+                key={index}
+                className="flex gap-2 items-center justify-start px-3 bg-[#F4F6FA] rounded-[16px]"
+              >
+                <img src={iconMap[item.getIcon(userInfo)]} alt={item.label} />
+                <div className="flex flex-col justify-start items-start">
+                  <Typography className="text-[14px] text-[#9C9EB9] font-[400] leading-[20px]">
+                    {item.label}
+                  </Typography>
+                  <Typography className="font-[500] text-[14px] leading-[20px] text-[#2D3142]">
+                    {item.getValue(userInfo)}
+                  </Typography>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
       <ContinueButton
