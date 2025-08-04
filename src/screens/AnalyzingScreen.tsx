@@ -1,153 +1,199 @@
-import icAnalyzing1 from '../assets/icAnalyzing1.png'
-import icAnalyzing2 from '../assets/icAnalyzing2.png'
-import icAnalyzing3 from '../assets/icAnalyzing3.png'
-
-import '../styles/AnalyzingScreen.css'
-import '../styles/Common.css'
-import {useEffect, useState} from "react";
-import {AnalyzingSchema} from "../models/WelcomeConfig";
+import "../styles/AnalyzingScreen.css";
+import "../styles/Common.css";
+import { AnalyzingSchema } from "../models/WelcomeConfig";
+import { useEffect, useState } from "react";
+import { Typography } from "antd";
+import icTickRed from "../assets/icTickRed.svg";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export interface AnalyzingScreenProps {
-    config: AnalyzingSchema
-    onContinue: () => void
+  config: AnalyzingSchema;
+  onContinue: () => void;
 }
 
 export function AnalyzingScreen(props: AnalyzingScreenProps) {
+  const [completedItems, setCompletedItems] = useState<number[]>([]);
+  const [currentLoading, setCurrentLoading] = useState<number>(0);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-    const ITEMS = [
-        {
-            title: props.config.options[0],
-            color: '#3A79D8',
-            icon: icAnalyzing1
-        },
-        {
-            title: props.config.options[1],
-            color: '#FF8972',
-            icon: icAnalyzing2
-        },
-        {
-            title: props.config.options[2],
-            color: '#A985E5',
-            icon: icAnalyzing3
-        }
-    ]
+  const loadingItems = [
+    "Analyzing your blood pressure status",
+    "Syncing your heart rate & activity history",
+    "Building your customized health plan",
+    "Creating advice for mental health",
+  ];
 
-    const [processes, setProcesses] = useState(Array(3).fill(0))
+  const testimonialCards = [
+    {
+      title: "GREAT APP",
+      reviewer: "Jimmy",
+      rating: 5,
+      content:
+        "I can't believe this thing monitors my heart rate. It tells me if it's too high and I need to slow down and quit working so hard.",
+      color: "bg-red-50",
+    },
+    {
+      title: "AMAZING FEATURES",
+      reviewer: "Sarah",
+      rating: 5,
+      content:
+        "The blood pressure tracking is incredible. It helps me stay on top of my health and make better lifestyle choices.",
+      color: "bg-blue-50",
+    },
+    {
+      title: "LIFE CHANGING",
+      reviewer: "Mike",
+      rating: 5,
+      content:
+        "This app has completely transformed how I monitor my health. The personalized insights are incredibly valuable.",
+      color: "bg-green-50",
+    },
+  ];
 
-    useEffect(() => {
-        let t1 = setTimeout(() => {
-            setRandom(0.4, 0.7)
-        }, 500)
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    arrows: false,
+    fade: false,
+    beforeChange: (oldIndex: number, newIndex: number) => {
+      setCurrentSlide(newIndex);
+    },
+  };
 
-        let t2 = setTimeout(() => {
-            setRandom(1, 1)
-        }, 4000)
+  useEffect(() => {
+    const loadItems = async () => {
+      for (let i = 0; i < loadingItems.length; i++) {
+        setCurrentLoading(i + 1);
 
-        let t3 = setTimeout(() => {
-            props.onContinue()
-        }, 7500)
+        // Simulate loading time (2 seconds per item)
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        return () => {
-            clearTimeout(t1);
-            clearTimeout(t2);
-            clearTimeout(t3);
-        }
-    }, [props]);
+        setCompletedItems((prev) => [...prev, i + 1]);
+        setCurrentLoading(0);
+      }
 
-    function setRandom(fromPercent: number, maxPercent: number) {
-        setProcesses(processes.map(_ => Math.random() * (maxPercent - fromPercent) + fromPercent))
+      // Call onContinue after loading is complete
+      setTimeout(() => {
+        props.onContinue();
+      }, 1000); // Wait 1 second after completion before calling onContinue
+    };
+
+    loadItems();
+  }, [props.onContinue]);
+
+  const getItemStatus = (index: number) => {
+    const itemNumber = index + 1;
+
+    if (completedItems.includes(itemNumber)) {
+      return "completed";
+    } else if (currentLoading === itemNumber) {
+      return "loading";
+    } else {
+      return "pending";
     }
+  };
 
-    function itemView(item: { title: string, color: string, icon: string }, idx: number) {
-        return <div
-            key={idx}
-            style={{
-                position: 'relative',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: 'white',
-                borderRadius: 16,
-                margin: '0px 24px',
-                height: 100
-            }}
-        >
-            <div style={{
-                position: 'absolute',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignContent: 'center',
-                gap: 12,
-                top: 0, left: 12, right: 114 + 12, bottom: 0
-            }}>
-                <span style={{
-                    textAlign: 'left',
-                    color: '#59617A'
-                }}>{item.title}</span>
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <span key={i} className="text-yellow-400 text-lg">
+        ★
+      </span>
+    ));
+  };
 
-                <div style={{
-                    width: '100%',
-                    height: 20
-                }}>
+  const renderProgressIndicator = () => {
+    return (
+      <div className="flex items-center justify-center gap-1 mt-6">
+        {[0, 1, 2].map((index) => (
+          <div key={index} className="flex items-center">
+            {index === currentSlide ? (
+              // Active state - Pill shape
+              <div className="w-6 h-2 bg-[#363946] rounded-full shadow-sm"></div>
+            ) : (
+              // Pending state - Circle
+              <div className="w-2 h-2 bg-[#D9D9D9] rounded-full shadow-sm"></div>
+            )}
+            {index < 2 && <div className="w-2 h-0.5 bg-transparent"></div>}
+          </div>
+        ))}
+      </div>
+    );
+  };
 
-                <div style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: 20,
-                    borderRadius: 10,
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        position: 'absolute',
-                        backgroundColor: item.color,
-                        height: 20,
-                        borderRadius: 10,
-                        width: '100%',
-                        opacity: 0.2,
-                        top: 0, bottom: 0, left: 0, right: 0,
-                    }}/>
+  return (
+    <div className="flex flex-col items-center justify-between  h-full px-5 overflow-y-auto">
+      <div className="flex flex-col gap-6 w-full max-w-md">
+        <Typography className="text-center text-[#2D3142] font-[600] text-[20px] leading-[32px] mb-6">
+          Personalizing Your Plan
+        </Typography>
 
+        <div className="flex flex-col gap-6 w-full max-w-md">
+          {loadingItems.map((item, index) => {
+            const status = getItemStatus(index);
 
-                    <div style={{
-                        position: 'absolute',
-                        backgroundColor: item.color,
-                        height: 20,
-                        borderRadius: 10,
-                        width: `${100 * (processes[idx])}%`,
-                        top: 0, bottom: 0, left: 0,
-                        transition: 'width 3s ease-in'
-                    }}/>
-                </div>
+            return (
+              <div key={index} className="flex items-center gap-4">
+                {/* Status Indicator */}
+                <div className="relative w-6 h-6">
+                  {status === "completed" && (
+                    <div className="w-6 h-6 bg-[#f5e4eb] rounded-full flex items-center justify-center p-1">
+                      <img src={icTickRed} alt="icTickRed" />
+                    </div>
+                  )}
+
+                  {status === "loading" && (
+                    <div className="w-6 h-6 border-2 border-[#FF3D60] rounded-full border-t-transparent animate-spin"></div>
+                  )}
+
+                  {status === "pending" && (
+                    <div className="w-6 h-6 border-2 border-[#f5e4eb] rounded-full"></div>
+                  )}
                 </div>
 
-            </div>
-
-            <img src={item.icon} alt={''} style={{
-                position: 'absolute',
-                width: 114,
-                bottom: 0,
-                right: 0,
-            }}/>
+                {/* Text */}
+                <Typography className="text-[#2D3142] font-[500] text-[16px] leading-[24px]">
+                  {item}
+                </Typography>
+              </div>
+            );
+          })}
         </div>
-    }
+      </div>
+      {/* Testimonial Carousel */}
+      <div className="w-full max-w-sm mb-8">
+        <Slider {...sliderSettings}>
+          {testimonialCards.map((card, index) => (
+            <div key={index} className="px-2">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div className="flex justify-between items-start mb-3">
+                  <Typography className="text-[#2D3142] font-[700] text-[16px] leading-[20px]">
+                    {card.title}
+                  </Typography>
+                  <Typography className="text-[#9C9EB9] font-[400] text-[14px] leading-[20px]">
+                    {card.reviewer}
+                  </Typography>
+                </div>
 
-    return <div style={{
-        position: 'relative',
-        display: "flex",
-        flexDirection: "column",
-        background: '#F4F6FA',
-        width: '100%',
-        height: '100%',
-        gap: 12
-    }}>
-        <div style={{height: 26}}></div>
-        <span className='title-text'>{props.config.title}</span>
-        {
-            ITEMS.map((item, idx) => {
-                return itemView(item, idx)
-            })
-        }
+                <div className="flex mb-3">{renderStars(card.rating)}</div>
+
+                <Typography className="text-[#2D3142] font-[400] text-[14px] leading-[20px] text-start">
+                  {card.content}
+                </Typography>
+              </div>
+            </div>
+          ))}
+        </Slider>
+
+        {/* Custom Progress Indicator */}
+        {renderProgressIndicator()}
+      </div>
     </div>
+  );
 }

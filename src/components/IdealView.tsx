@@ -1,22 +1,14 @@
-import '../styles/Common.css'
+import "../styles/Common.css";
 import icIdeal from "../assets/icIdeal.png";
-function IdealView(props: { text: string}) {
-    return <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '8px',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '16px',
-        backgroundColor: 'white',
-        borderRadius: '20px',
-        margin: '8px 24px',
-    }}>
-        <img src={icIdeal} alt={''}/>
-        <span className='normal-text-align-start'>
-                {props.text}
-            </span>
+function IdealView(props: { text: string }) {
+  return (
+    <div className="flex flex-row gap-[8px] items-center justify-center p-4 bg-white rounded-[20px] m-4">
+      <img src={icIdeal} alt={"idea"} />
+      <span className="text-[#59617A] text-start  text-[14px] leading-[20px]">
+        {props.text}
+      </span>
     </div>
+  );
 }
 
 export default IdealView;

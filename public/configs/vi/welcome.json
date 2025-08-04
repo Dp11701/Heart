@@ -89,10 +89,22 @@
     "description": "Hãy nhớ duy trì thói quen lành mạnh, bao gồm chế độ ăn uống cân bằng và tập thể dục để hỗ trợ sức khỏe tổng thể của bạn",
     "continue": "Tiếp tục"
   },
+  "SELECT_HEALTH_CONDITION": {
+    "title": "What’s Your Current Health Goal?",
+    "options": [
+      "Lose weight",
+      "Gain muscle",
+      "Improve sleep",
+      "Improve mental health",
+      "Improve heart health"
+    ]
+  },
   "SELECT_CHOLESTEROL": {
     "title": "Bạn có bị cholesterol cao không?",
     "options": [
-      "Có", "Không", "Tôi không biết"
+      "Có",
+      "Không",
+      "Tôi không biết"
     ]
   },
   "SELECT_BLOOD_PRESSURE": {
@@ -108,13 +120,16 @@
   "SELECT_HYPERTENSION": {
     "title": "Bạn có bị cao huyết áp không?",
     "options": [
-      "Có", "Không", "Tôi không biết"
+      "Có",
+      "Không",
+      "Tôi không biết"
     ]
   },
   "SELECT_HIGH_BLOOD_PRESSURE": {
     "title": "Bạn có dùng thuốc điều trị cao huyết áp không?",
     "options": [
-      "Có", "Không"
+      "Có",
+      "Không"
     ]
   },
   "SELECT_ACTIVITY_LEVEL": {

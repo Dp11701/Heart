@@ -1,0 +1,219 @@
+import React, { useState, useEffect, useRef } from "react";
+import "../styles/WheelNumberPicker.css";
+
+export interface WheelNumberPickerProps {
+  max: number;
+  min: number;
+  ideal: number;
+  unit: string;
+  currentValue: number;
+  onChangeValue: (value: number) => void;
+}
+
+export function WheelNumberPicker(props: WheelNumberPickerProps) {
+  const [selectedValue, setSelectedValue] = useState(
+    props.currentValue || props.ideal
+  );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [scrollOffset, setScrollOffset] = useState(0);
+  const [touchStartTime, setTouchStartTime] = useState(0);
+  const [lastTouchY, setLastTouchY] = useState(0);
+  const [velocity, setVelocity] = useState(0);
+  const [lastTouchTime, setLastTouchTime] = useState(0);
+
+  const itemHeight = 60; // Height of each number item
+  const visibleItems = 5; // Number of visible items - changed from 7 to 5
+  const centerIndex = Math.floor(visibleItems / 2);
+
+  useEffect(() => {
+    // Calculate initial scroll position to center the ideal value
+    const initialScroll = (props.ideal - props.min) * itemHeight;
+    setScrollOffset(initialScroll);
+  }, [props.ideal, props.min]);
+
+  useEffect(() => {
+    props.onChangeValue(selectedValue);
+  }, [selectedValue]);
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 1 : -1;
+    const newValue = Math.max(
+      props.min,
+      Math.min(props.max, selectedValue + delta)
+    );
+    setSelectedValue(newValue);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+    setStartY(e.touches[0].clientY);
+    setLastTouchY(e.touches[0].clientY);
+    setTouchStartTime(Date.now());
+    setLastTouchTime(Date.now());
+    setVelocity(0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const currentY = e.touches[0].clientY;
+    const currentTime = Date.now();
+    const deltaY = lastTouchY - currentY;
+    const deltaTime = currentTime - lastTouchTime;
+
+    // Calculate velocity for momentum
+    if (deltaTime > 0) {
+      setVelocity(deltaY / deltaTime);
+    }
+
+    // More sensitive touch movement
+    const sensitivity = 0.5; // Adjust this value to make it more/less sensitive
+    const deltaValue = Math.round((deltaY * sensitivity) / itemHeight);
+
+    if (Math.abs(deltaValue) >= 1) {
+      const newValue = Math.max(
+        props.min,
+        Math.min(props.max, selectedValue + deltaValue)
+      );
+      setSelectedValue(newValue);
+      setLastTouchY(currentY);
+      setLastTouchTime(currentTime);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const touchDuration = Date.now() - touchStartTime;
+
+    // Apply momentum if the touch was quick
+    if (touchDuration < 300 && Math.abs(velocity) > 0.5) {
+      const momentumSteps = Math.round(Math.abs(velocity) * 3);
+      const direction = velocity > 0 ? 1 : -1;
+
+      let momentumValue = selectedValue;
+      for (let i = 0; i < momentumSteps; i++) {
+        momentumValue = Math.max(
+          props.min,
+          Math.min(props.max, momentumValue + direction)
+        );
+      }
+
+      // Animate to final value
+      setTimeout(() => {
+        setSelectedValue(momentumValue);
+      }, 50);
+    }
+
+    setIsDragging(false);
+    setVelocity(0);
+  };
+
+  const handleClick = (value: number) => {
+    if (!isDragging) {
+      setSelectedValue(value);
+    }
+  };
+
+  const generateNumbers = () => {
+    const numbers = [];
+    const centerValue = selectedValue;
+
+    // Always show 5 items: 2 below, center, 2 above
+    for (let i = -2; i <= 2; i++) {
+      const value = centerValue + i;
+      // Ensure the value is within the min/max range
+      if (value >= props.min && value <= props.max) {
+        numbers.push(value);
+      }
+    }
+
+    // If we don't have 5 items, pad with min/max values
+    while (numbers.length < 5) {
+      if (numbers[0] > props.min) {
+        numbers.unshift(numbers[0] - 1);
+      } else if (numbers[numbers.length - 1] < props.max) {
+        numbers.push(numbers[numbers.length - 1] + 1);
+      } else {
+        break; // Prevent infinite loop
+      }
+    }
+
+    return numbers;
+  };
+
+  const getItemStyle = (value: number) => {
+    const distance = Math.abs(value - selectedValue);
+    let fontSize = 20;
+    let fontWeight = "normal";
+    let color = "#59617A";
+    let borderTop = "none";
+    let borderBottom = "none";
+
+    if (distance === 0) {
+      // Center selected item
+      fontSize = 24;
+      fontWeight = "bold";
+      color = "#3A79D8";
+      borderTop = "2px solid #3A79D8";
+      borderBottom = "2px solid #3A79D8";
+    } else if (distance === 1) {
+      // Adjacent items
+      fontSize = 20;
+      color = "#59617A";
+    } else if (distance === 2) {
+      // Min/Max items
+      fontSize = 16;
+      color = "#CDD0D6";
+    }
+
+    return {
+      fontSize: `${fontSize}px`,
+      fontWeight,
+      color,
+      height: `${itemHeight}px`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      transition: "all 0.2s ease",
+      borderTop,
+      borderBottom,
+    };
+  };
+
+  return (
+    <div className="wheel-picker-container">
+      <div
+        className="wheel-picker"
+        ref={containerRef}
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Numbers list */}
+        <div className="numbers-container">
+          {generateNumbers().map((value) => (
+            <div
+              key={value}
+              className="number-item"
+              style={getItemStyle(value)}
+              onClick={() => handleClick(value)}
+            >
+              <div className="number-value">{value}</div>
+              {value === selectedValue && (
+                <span className="unit-text">{props.unit}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

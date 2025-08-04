@@ -1,95 +1,83 @@
+import "../styles/Common.css";
+import icMan from "../assets/icMan.png";
+import icWomen from "../assets/icWomen.png";
+import { useState } from "react";
 
-import '../styles/Common.css'
-import icMale from '../assets/icMale.png'
-import icFemale from '../assets/icFemale.png'
-import icUncheck from '../assets/icUncheck.png'
-import icChecked from '../assets/icChecked.png'
-import {useState} from "react";
-import {EnumGender} from "../models/EnumGender";
-
-import '../styles/SelectGenderScreen.css'
-import '../styles/SelectRadioView.css'
+import "../styles/SelectGenderScreen.css";
+import "../styles/SelectRadioView.css";
 import IdealView from "../components/IdealView";
-import {SelectGenderSchema, SelectSchema} from "../models/WelcomeConfig";
+import NextButton from "../components/NextButton";
+import { SelectGenderSchema } from "../models/WelcomeConfig";
 
-function SelectGenderScreen(props: { config: SelectGenderSchema, onSelectGender: (gender: string) => void }) {
+function SelectGenderScreen(props: {
+  config: SelectGenderSchema;
+  onSelectGender: (gender: string) => void;
+}) {
+  const [selectedGender, setSelectedGender] = useState<string | null>(null);
 
-    const [selectedGender, setSelectedGender] = useState<string | null>(null)
+  function selectGender(gender: string) {
+    setSelectedGender(gender);
+  }
 
-    function selectGender(gender: string) {
-        if (selectedGender !== null) return;
-        setSelectedGender(gender);
+  function view(gender: string) {
+    const isSelected = selectedGender === gender;
+    return (
+      <div
+        className={`flex flex-col items-center justify-between p-4 bg-white rounded-[20px] m-2 h-min-[26vh] flex-1 gap-2 ${
+          isSelected ? "border-2 border-[#FF3D60]" : ""
+        }`}
+        onClick={() => {
+          selectGender(gender);
+        }}
+      >
+        <img
+          src={gender === props.config.male ? icMan : icWomen}
+          alt={""}
+          className="w-[2000%] h-auto max-w-[150%] object-contain md:w-[150%]"
+        />
+        <span className="text-[18px] font-[500] text-[#2D3142] leading-[28px]">
+          {" "}
+          {gender === props.config.male
+            ? props.config.male
+            : props.config.female}
+        </span>
+      </div>
+    );
+  }
 
-        setTimeout(() => {
-            props.onSelectGender(gender)
-        }, 600)
-    }
+  return (
+    <div className="flex flex-col items-center justify-between p-4 w-full h-full overflow-y-auto">
+      <div className="flex flex-col items-center gap-4">
+        <span className=" text-2xl font-bold text-gray-[#2D3142] my-4">
+          {props.config.title}
+        </span>
 
-    function view(gender: string) {
-        const isSelected = selectedGender === gender
-        return <div
-            className={`gender-card-container ${isSelected ? 'bounce' : ''}`}
-            onClick={ () => {
-                selectGender(gender)
-            }}
-        >
-            <img
-                src={ gender === props.config.male ? icMale : icFemale}
-                alt={''}
-                style={{
-                    width: '100%',
-                    height: 'auto',
-                }}
-            />
-            <span
-                style={{
-                    fontWeight: 'bold',
-                    fontSize: '18px'
-                }}
-            > {gender === props.config.male ? props.config.male : props.config.female}
-            </span>
+        <IdealView text={props.config.description} />
 
-            <img src={isSelected ? icChecked : icUncheck} alt={''} style={{
-                width: 24,
-                height: 'auto',
-            }}/>
+        <div className="flex flex-row items-center justify-center ">
+          {view(props.config.male)}
+          {view(props.config.female)}
         </div>
-    }
-
-    return <div style={{
-        display: "flex",
-        flexDirection: "column",
-        background: '#F4F6FA',
-        width: '100%',
-        height: '100%',
-    }}>
-        <span className='title-text'>{props.config.title}</span>
-
-        <IdealView text={props.config.description}/>
-
-        <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '16px',
-            margin: '8px 24px'
-        }}>
-            { view(props.config.male) }
-            { view(props.config.female)}
-        </div>
-
+      </div>
+      <div className="flex flex-col gap-4 w-full mb-4">
         <div>
-            <button
-               className='gender-prefer-not-to-say'
-               onClick={() => selectGender(props.config.preferNotToSay)}
-            >
-                {props.config.preferNotToSay}
-            </button>
+          <button
+            className="gender-prefer-not-to-say"
+            onClick={() => selectGender(props.config.preferNotToSay)}
+          >
+            {props.config.preferNotToSay}
+          </button>
         </div>
+        <NextButton
+          disabled={selectedGender === null}
+          text={"Next"}
+          onClick={() => {
+            props.onSelectGender(selectedGender || "");
+          }}
+        />
+      </div>
     </div>
-
+  );
 }
-
 
 export default SelectGenderScreen;

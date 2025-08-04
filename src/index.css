@@ -1,19 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent overscroll bounce effects on mobile */
+html {
+  user-select: none;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+  -webkit-overscroll-behavior-x: none;
+  -webkit-overscroll-behavior-y: none;
+  
+  /* Prevent viewport bounce on iOS */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'SF Pro Display', sans-serif;
+                                                
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   user-select: none;
   overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none;
   overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+  -webkit-overscroll-behavior-x: none;
+  -webkit-overscroll-behavior-y: none;
+  background-image: url('./assets/backgroundImage.png') !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  /* Prevent viewport bounce on iOS */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-html {
+
+/* Prevent overscroll on all scrollable elements */
+* {
+  overscroll-behavior: contain;
+  -webkit-overscroll-behavior: contain;
+}
+
+/* Specific overrides for scrollable containers */
+.scrollable-container {
+  overscroll-behavior: contain;
+  -webkit-overscroll-behavior: contain;
+}
+
+/* Prevent touch callouts and selections */
+* {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
-  overflow-x: hidden;
-  overscroll-behavior-x: none;
 }
+
+/* Allow text selection in specific areas if needed */
+.allow-text-selection {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

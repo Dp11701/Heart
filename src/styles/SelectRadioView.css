@@ -17,10 +17,10 @@
     display: flex;
     align-items: center;
     justify-content: start;
-    background-color: #FF3D60;
+    background-color: white;
     height: 56px;
     border-radius: 16px;
-    color: white;
+    color: #2D3142;
     font-size: 17px;
     font-weight: 500;
     margin: 0 24px;
