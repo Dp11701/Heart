@@ -106,8 +106,7 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
     if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     scrollTimeout.current = setTimeout(() => {
       snapToNearest();
-      setIsScrolling(false);
-    }, 250); // Increased delay for better mobile performance
+    }, 120); // Increased delay for better mobile performance
   };
 
   // Also snap on mouse/touch end for best UX
