@@ -18,7 +18,7 @@ export interface TextInputViewProps {
   useRulerPicker?: boolean; // New prop to use ruler picker
   pickerOrientation?: "horizontal" | "vertical"; // Orientation for ruler picker
   useVerticalRulerPicker?: boolean; // New prop to use vertical ruler picker
-  gender?: "male" | "female";
+  gender?: "Male" | "Female";
 }
 
 export function TextInputView(props: TextInputViewProps) {
@@ -77,7 +77,7 @@ export function TextInputView(props: TextInputViewProps) {
           value={parseInt(props.currentValue) || props.ideal}
           unit={props.unit}
           onChange={(val) => props.onChangeValue(val.toString())}
-          gender={props.gender || "male"}
+          gender={props.gender || "Male"}
         />
       </div>
     );

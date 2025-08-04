@@ -110,7 +110,7 @@ export function SelectHeightScreen(
               checkValid(newValue, minValue, maxValue);
             }}
             useVerticalRulerPicker={true}
-            gender={props.userInfo.gender as "male" | "female" | undefined}
+            gender={props.userInfo.gender as "Male" | "Female" | undefined}
           />
         </div>
       </div>

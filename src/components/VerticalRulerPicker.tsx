@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import "./VerticalRulerPicker.css";
 import icBgWomen from "../assets/icBgWomen.png";
 import icBgMan from "../assets/icBgMan.png";
 
@@ -8,7 +9,7 @@ interface VerticalRulerPickerProps {
   value: number;
   unit?: string;
   onChange?: (val: number) => void;
-  gender?: "male" | "female";
+  gender?: "Male" | "Female";
 }
 
 const ITEM_HEIGHT = 10;
@@ -31,17 +32,25 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(value);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
 
+  // Only scroll to initial position on mount, not on every re-render
   useEffect(() => {
     if (!scrollRef.current) return;
-    const rulerHeight = scrollRef.current.clientHeight;
+    const el = scrollRef.current;
+    const rulerHeight = el.clientHeight;
     const measuringLinePosition = rulerHeight * 0.15;
-    const top = (max - value) * ITEM_HEIGHT; // Đảo ngược: max - value thay vì value - min
-    scrollRef.current.scrollTo({
-      top: top - measuringLinePosition + ITEM_HEIGHT / 2,
-      behavior: "smooth",
-    });
-  }, []); // chỉ chạy 1 lần khi mount
+    const targetTop =
+      (max - value) * ITEM_HEIGHT - measuringLinePosition + ITEM_HEIGHT / 2;
+
+    // Only scroll if it's too far from target and user is not actively scrolling
+    if (Math.abs(el.scrollTop - targetTop) > ITEM_HEIGHT && !isUserScrolling) {
+      el.scrollTo({
+        top: targetTop,
+        behavior: "smooth",
+      });
+    }
+  }, [value, max, isUserScrolling]); // Add proper dependencies
 
   const snapToNearest = () => {
     if (!scrollRef.current) return;
@@ -65,6 +74,10 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
 
   const handleScroll = () => {
     if (!scrollRef.current) return;
+
+    // Set user scrolling state
+    setIsUserScrolling(true);
+
     const rulerHeight = scrollRef.current.clientHeight;
     const measuringLinePosition = rulerHeight * 0.15; // 15% from top
     const scrollTop = scrollRef.current.scrollTop;
@@ -76,29 +89,55 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
       setCurrent(newValue);
       onChange?.(newValue);
     }
-    // Debounce snap
+
+    // Debounce snap with longer delay for mobile
     if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     scrollTimeout.current = setTimeout(() => {
       snapToNearest();
-    }, 120);
+      setIsUserScrolling(false);
+    }, 200); // Increased delay for better mobile performance
   };
 
   // Also snap on mouse/touch end for best UX
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const onEnd = () => snapToNearest();
+
+    const onEnd = () => {
+      // Small delay to let momentum scrolling finish
+      setTimeout(() => {
+        snapToNearest();
+        setIsUserScrolling(false);
+      }, 100);
+    };
+
     el.addEventListener("touchend", onEnd);
     el.addEventListener("mouseup", onEnd);
+    el.addEventListener("scrollend", () => setIsUserScrolling(false));
+
     return () => {
       el.removeEventListener("touchend", onEnd);
       el.removeEventListener("mouseup", onEnd);
+      el.removeEventListener("scrollend", () => setIsUserScrolling(false));
     };
-  }, []);
+  }, [snapToNearest]);
+
+  // Prevent default touch behaviors that might interfere
+  const handleTouchStart = (e: React.TouchEvent) => {
+    // Allow native scrolling but prevent other touch behaviors
+    e.stopPropagation();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    // Prevent zoom gestures during scroll
+    if (Math.abs(e.touches[0].clientY - e.touches[0].clientY) > 10) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div
-      className="flex items-center w-full h-full relative select-none"
+      className="flex items-center w-full h-full relative select-none vertical-ruler-container pl-3"
       style={{ overflow: "visible" }}
     >
       {/* Ruler */}
@@ -106,15 +145,18 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
         {/* Ruler ticks */}
         <div
           ref={scrollRef}
-          className="relative h-full overflow-y-scroll pl-2"
+          className="relative h-full overflow-y-scroll ml-4 ruler-scroll-container"
           style={{
             WebkitOverflowScrolling: "touch",
             scrollBehavior: "smooth",
             scrollSnapType: "y mandatory",
             overflowY: "auto",
             overflowX: "hidden",
+            touchAction: "pan-y",
           }}
           onScroll={handleScroll}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
         >
           <div
             className="relative flex flex-col items-start"
@@ -129,7 +171,7 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
               return (
                 <div
                   key={val}
-                  className="flex items-center"
+                  className="flex items-center ruler-item"
                   style={{ height: ITEM_HEIGHT, scrollSnapAlign: "start" }}
                 >
                   <div
@@ -163,7 +205,7 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
       {/* Avatar and measurement display */}
       <div className="w-2/3 h-[60vh] flex justify-center items-center relative">
         {/* Value display */}
-        <div className="absolute left-1/2 top-[15%] -translate-x-1/2 -translate-y-full z-30 text-[28px] font-semibold text-[#2D3142] text-center mb-2">
+        <div className="absolute left-1/2 top-[15%] -translate-x-1/2 -translate-y-full z-30 text-[28px] font-semibold text-[#2D3142] text-center mb-2 ruler-value-display">
           {unit === "ft/in"
             ? formatInchesToFeet(current)
             : `${current} ${unit}`}
@@ -175,7 +217,7 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
           style={{ height: "80%" }}
         >
           <img
-            src={gender === "male" ? icBgMan : icBgWomen}
+            src={gender === "Male" ? icBgMan : icBgWomen}
             alt="gender-illustration"
             className="object-contain object-bottom h-full w-full"
             style={{ maxHeight: "100%" }}
