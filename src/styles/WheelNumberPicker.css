@@ -85,14 +85,7 @@
     pointer-events: none;
 }
 
-.number-item:hover {
-    background-color: rgba(58, 121, 216, 0.1);
-}
-
-.number-item:active {
-    background-color: rgba(58, 121, 216, 0.2);
-    transform: scale(0.98);
-}
+/* Removed hover and active effects to eliminate highlight on click */
 
 /* Selection lines removed - using borders on center item instead */
 
