@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import "./RulerPicker.css";
 
 interface RulerPickerProps {
   min: number;
@@ -23,7 +22,6 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(value);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
-  const [isScrolling, setIsScrolling] = useState(false);
 
   useEffect(() => {
     if (!scrollRef.current) return;
@@ -79,12 +77,6 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
 
   const handleScroll = () => {
     if (!scrollRef.current) return;
-
-    // Set scrolling state to prevent excessive updates
-    if (!isScrolling) {
-      setIsScrolling(true);
-    }
-
     const centerOffset =
       orientation === "horizontal"
         ? scrollRef.current.clientWidth / 2
@@ -101,55 +93,30 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
       setCurrent(newValue);
       onChange?.(newValue);
     }
-
-    // Debounce snap with longer delay for mobile
+    // Debounce snap
     if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     scrollTimeout.current = setTimeout(() => {
       snapToNearest();
-    }, 120); // Increased delay for better mobile performance
+    }, 120);
   };
 
   // Also snap on mouse/touch end for best UX
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-
-    const onEnd = () => {
-      // Small delay to let momentum scrolling finish
-      setTimeout(() => {
-        snapToNearest();
-        setIsScrolling(false);
-      }, 100);
-    };
-
+    const onEnd = () => snapToNearest();
     el.addEventListener("touchend", onEnd);
     el.addEventListener("mouseup", onEnd);
-    el.addEventListener("scrollend", () => setIsScrolling(false));
-
     return () => {
       el.removeEventListener("touchend", onEnd);
       el.removeEventListener("mouseup", onEnd);
-      el.removeEventListener("scrollend", () => setIsScrolling(false));
     };
   }, [orientation, snapToNearest]);
 
-  // Prevent default touch behaviors that might interfere
-  const handleTouchStart = (e: React.TouchEvent) => {
-    // Allow native scrolling but prevent other touch behaviors
-    e.stopPropagation();
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    // Prevent zoom gestures during scroll
-    if (Math.abs(e.touches[0].clientX - e.touches[0].clientX) > 10) {
-      e.preventDefault();
-    }
-  };
-
   return (
-    <div className="w-full max-w-md mx-auto select-none ruler-picker-container">
+    <div className="w-full max-w-md mx-auto select-none">
       {/* Giá trị hiển thị */}
-      <div className="text-center text-[28px] leading-[32px] font-semibold text-[#2D3142] mb-2 ruler-value-display">
+      <div className="text-center text-[28px] leading-[32px] font-semibold text-[#2D3142] mb-2">
         {current}
         <span className="text-[20px] leading-[32px] text-[#2D3142] font-[500] ml-1">
           {unit}
@@ -176,19 +143,16 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
         {/* Scrollable ruler */}
         <div
           ref={scrollRef}
-          className={`relative h-full bg-transparent ruler-scroll-container ${
+          className={`no-scrollbar relative h-full bg-transparent ${
             orientation === "horizontal"
               ? "overflow-x-scroll"
               : "overflow-y-scroll"
           }`}
-          style={{
-            touchAction: orientation === "horizontal" ? "pan-x" : "pan-y",
-            WebkitOverflowScrolling: "touch",
-            scrollBehavior: "smooth",
-          }}
           onScroll={handleScroll}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
+          style={{
+            scrollbarWidth: "none" /* Firefox */,
+            msOverflowStyle: "none" /* IE and Edge */,
+          }}
         >
           <div
             className={`relative bg-transparent flex items-end ${
@@ -213,7 +177,7 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
               return (
                 <div
                   key={val}
-                  className={`flex flex-col items-center justify-end ruler-item ${
+                  className={`flex flex-col items-center justify-end ${
                     orientation === "horizontal"
                       ? ""
                       : "flex-row items-end justify-center"
