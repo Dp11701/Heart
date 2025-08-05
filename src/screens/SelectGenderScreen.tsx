@@ -46,7 +46,7 @@ function SelectGenderScreen(props: {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between p-4 w-full h-full overflow-y-auto">
+    <div className="flex flex-col items-center justify-between p-4 w-full h-full overflow-y-auto mb-[10vh]">
       <div className="flex flex-col items-center gap-4">
         <span className=" text-2xl font-bold text-gray-[#2D3142] my-4">
           {props.config.title}

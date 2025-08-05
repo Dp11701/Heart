@@ -94,7 +94,7 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
 
     // Apply momentum if the touch was quick
     if (touchDuration < 300 && Math.abs(velocity) > 0.5) {
-      const momentumSteps = Math.round(Math.abs(velocity) * 3);
+      const momentumSteps = Math.round(Math.abs(velocity) * 5); // Increased momentum
       const direction = velocity > 0 ? 1 : -1;
 
       let momentumValue = selectedValue;
@@ -105,10 +105,31 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
         );
       }
 
-      // Animate to final value
-      setTimeout(() => {
-        setSelectedValue(momentumValue);
-      }, 50);
+      // Smooth animation to final value with easing
+      const animateToValue = (
+        targetValue: number,
+        currentValue: number,
+        step: number = 0
+      ) => {
+        if (step >= 10) {
+          setSelectedValue(targetValue);
+          return;
+        }
+
+        const progress = step / 10;
+        const easeOut = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
+        const interpolatedValue = Math.round(
+          currentValue + (targetValue - currentValue) * easeOut
+        );
+
+        setSelectedValue(interpolatedValue);
+
+        setTimeout(() => {
+          animateToValue(targetValue, interpolatedValue, step + 1);
+        }, 16); // ~60fps
+      };
+
+      animateToValue(momentumValue, selectedValue);
     }
 
     setIsDragging(false);
@@ -161,8 +182,6 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
       fontSize = 24;
       fontWeight = "bold";
       color = "#3A79D8";
-      borderTop = "2px solid #3A79D8";
-      borderBottom = "2px solid #3A79D8";
     } else if (distance === 1) {
       // Adjacent items
       fontSize = 20;
@@ -181,9 +200,20 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      transition: "all 0.2s ease",
       borderTop,
       borderBottom,
+    };
+  };
+
+  const getItemClassName = (value: number) => {
+    const distance = Math.abs(value - selectedValue);
+    return `number-item ${distance === 0 ? "selected" : ""}`;
+  };
+
+  const getItemDataProps = (value: number) => {
+    const distance = Math.abs(value - selectedValue);
+    return {
+      "data-diff": distance.toString(),
     };
   };
 
@@ -202,9 +232,10 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
           {generateNumbers().map((value) => (
             <div
               key={value}
-              className="number-item"
+              className={getItemClassName(value)}
               style={getItemStyle(value)}
               onClick={() => handleClick(value)}
+              {...getItemDataProps(value)}
             >
               <div className="number-value">{value}</div>
               {value === selectedValue && (
