@@ -34,12 +34,10 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
     if (orientation === "horizontal") {
       scrollRef.current.scrollTo({
         left: left - centerOffset + ITEM_WIDTH / 2,
-        behavior: "auto",
       });
     } else {
       scrollRef.current.scrollTo({
         top: left - centerOffset + ITEM_WIDTH / 2,
-        behavior: "auto",
       });
     }
   }, [value, min, orientation]);

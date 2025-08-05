@@ -33,6 +33,23 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
   const [current, setCurrent] = useState(value);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [prevUnit, setPrevUnit] = useState(unit);
+
+  // Handle unit change and set default values
+  useEffect(() => {
+    if (prevUnit !== unit) {
+      let defaultValue: number;
+      if (unit === "ft/in") {
+        defaultValue = 50;
+      } else {
+        defaultValue = 130;
+      }
+
+      setCurrent(defaultValue);
+      onChange?.(defaultValue);
+      setPrevUnit(unit);
+    }
+  }, [unit, prevUnit, onChange]);
 
   // Only scroll to initial position on mount, not on every re-render
   useEffect(() => {
@@ -41,7 +58,7 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
     const rulerHeight = el.clientHeight;
     const measuringLinePosition = rulerHeight * 0.15;
     const targetTop =
-      (max - value) * ITEM_HEIGHT - measuringLinePosition + ITEM_HEIGHT / 2;
+      (max - current) * ITEM_HEIGHT - measuringLinePosition + ITEM_HEIGHT / 2;
 
     // Only scroll if it's too far from target and user is not actively scrolling
     if (Math.abs(el.scrollTop - targetTop) > ITEM_HEIGHT && !isUserScrolling) {
@@ -50,7 +67,7 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
         behavior: "smooth",
       });
     }
-  }, [value, max, isUserScrolling]); // Add proper dependencies
+  }, [current, max, isUserScrolling]); // Changed from value to current
 
   const snapToNearest = () => {
     if (!scrollRef.current) return;
@@ -130,9 +147,6 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     // Prevent zoom gestures during scroll
-    if (Math.abs(e.touches[0].clientY - e.touches[0].clientY) > 10) {
-      e.preventDefault();
-    }
   };
 
   return (
@@ -148,7 +162,6 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
           className="relative h-full overflow-y-scroll pl-4 ruler-scroll-container"
           style={{
             WebkitOverflowScrolling: "touch",
-            scrollBehavior: "smooth",
             scrollSnapType: "y mandatory",
             overflowY: "auto",
             overflowX: "hidden",
@@ -166,9 +179,6 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
             }}
           >
             {[
-              ...Array.from({ length: 20 }).map((_, i) => (
-                <div key={`spacer-top-${i}`} style={{ height: ITEM_HEIGHT }} />
-              )),
               ...Array.from({ length: max - min + 1 }).map((_, i) => {
                 const val = max - i;
                 const isTenth = val % 10 === 0;
@@ -191,12 +201,6 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
                   </div>
                 );
               }),
-              ...Array.from({ length: 20 }).map((_, i) => (
-                <div
-                  key={`spacer-bottom-${i}`}
-                  style={{ height: ITEM_HEIGHT }}
-                />
-              )),
             ]}
           </div>
         </div>
