@@ -15,7 +15,7 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
   min,
   max,
   value,
-  unit = "",
+  unit = "lbs",
   onChange,
   orientation = "horizontal",
 }) => {

@@ -144,50 +144,41 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
 
   const generateNumbers = () => {
     const numbers = [];
-    const centerValue = selectedValue;
-
-    // Always show 5 items: 2 below, center, 2 above
     for (let i = -2; i <= 2; i++) {
-      const value = centerValue + i;
-      // Ensure the value is within the min/max range
+      const value = selectedValue + i;
       if (value >= props.min && value <= props.max) {
         numbers.push(value);
-      }
-    }
-
-    // If we don't have 5 items, pad with min/max values
-    while (numbers.length < 5) {
-      if (numbers[0] > props.min) {
-        numbers.unshift(numbers[0] - 1);
-      } else if (numbers[numbers.length - 1] < props.max) {
-        numbers.push(numbers[numbers.length - 1] + 1);
       } else {
-        break; // Prevent infinite loop
+        numbers.push(null); // placeholder for out-of-range values
       }
     }
-
     return numbers;
   };
 
-  const getItemStyle = (value: number) => {
+  const getItemStyle = (value: number | null) => {
+    if (value === null) {
+      return {
+        height: `${itemHeight}px`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        visibility: "hidden" as const, // <-- add 'as const' here
+      };
+    }
+
     const distance = Math.abs(value - selectedValue);
     let fontSize = 20;
     let fontWeight = "normal";
     let color = "#59617A";
-    let borderTop = "none";
-    let borderBottom = "none";
 
     if (distance === 0) {
-      // Center selected item
       fontSize = 24;
       fontWeight = "bold";
       color = "#3A79D8";
     } else if (distance === 1) {
-      // Adjacent items
       fontSize = 20;
       color = "#59617A";
     } else if (distance === 2) {
-      // Min/Max items
       fontSize = 16;
       color = "#CDD0D6";
     }
@@ -200,8 +191,6 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      borderTop,
-      borderBottom,
     };
   };
 
@@ -229,17 +218,23 @@ export function WheelNumberPicker(props: WheelNumberPickerProps) {
       >
         {/* Numbers list */}
         <div className="numbers-container">
-          {generateNumbers().map((value) => (
+          {generateNumbers().map((value, index) => (
             <div
-              key={value}
-              className={getItemClassName(value)}
+              key={index}
+              className={
+                value !== null ? getItemClassName(value) : "number-item"
+              }
               style={getItemStyle(value)}
-              onClick={() => handleClick(value)}
-              {...getItemDataProps(value)}
+              onClick={() => value !== null && handleClick(value)}
+              {...(value !== null ? getItemDataProps(value) : {})}
             >
-              <div className="number-value">{value}</div>
-              {value === selectedValue && (
-                <span className="unit-text">{props.unit}</span>
+              {value !== null && (
+                <>
+                  <div className="number-value">{value}</div>
+                  {value === selectedValue && (
+                    <span className="unit-text">{props.unit}</span>
+                  )}
+                </>
               )}
             </div>
           ))}

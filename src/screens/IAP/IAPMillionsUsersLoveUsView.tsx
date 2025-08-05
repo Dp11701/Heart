@@ -27,7 +27,7 @@ function CommentView(props: CommentViewProps) {
         border: "2px solid #E3E1E1",
         borderRadius: 20,
         gap: 12,
-        minWidth: 334,
+        minWidth: 320,
       }}
       className="w-full px-2 py-4 justify-between"
     >
@@ -38,12 +38,20 @@ function CommentView(props: CommentViewProps) {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            width: 320,
           }}
         >
-          <span style={{ fontSize: 20, fontWeight: 600, textAlign: "start" }}>
-            {props.comment.title}
-          </span>
+          <div
+            style={{
+              width: 200,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              textAlign: "start",
+            }}
+          >
+            <span style={{ fontSize: 20, fontWeight: 600, textAlign: "start" }}>
+              {props.comment.title}
+            </span>
+          </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             {Array(props.comment.star)
               .fill(0)
@@ -128,7 +136,7 @@ export function IAPMillionsUsersLoveUsView(props: { config: IAPConfig }) {
         alt={""}
         style={{
           margin: "0px 24px",
-          aspectRatio: 1655 / 710,
+          height: "auto",
         }}
       />
     </div>

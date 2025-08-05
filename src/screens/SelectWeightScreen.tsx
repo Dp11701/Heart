@@ -18,7 +18,7 @@ export interface SelectWeightScreenProps {
 export function SelectWeightScreen(
   props: SelectWeightScreenProps
 ): JSX.Element {
-  const [unit, setUnit] = useState(props.weightConfig[0].unit);
+  const [unit, setUnit] = useState(props.weightConfig[1].unit);
   const [value, setValue] = useState(0);
   const [maxValue, setMaxValue] = useState(props.weightConfig[0].max);
   const [minValue, setMinValue] = useState(props.weightConfig[0].min);

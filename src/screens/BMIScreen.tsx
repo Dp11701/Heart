@@ -192,7 +192,7 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
                 className="flex gap-2 items-center justify-start px-3 bg-[#F4F6FA] rounded-[16px]"
               >
                 <img src={iconMap[item.getIcon(userInfo)]} alt={item.label} />
-                <div className="flex flex-col justify-start items-start">
+                <div className="flex flex-col justify-start items-start py-3">
                   <Typography className="text-[14px] text-[#9C9EB9] font-[400] leading-[20px]">
                     {item.label}
                   </Typography>

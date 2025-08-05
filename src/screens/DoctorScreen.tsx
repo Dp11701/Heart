@@ -10,7 +10,7 @@ export default function DoctorScreen({ onContinue }: DoctorScreenProps) {
   return (
     <div className="flex flex-col h-full justify-between mb-8">
       <div>
-        <Typography className="text-center text-[#2D3142] font-[500] text-[16px] leading-[24px] px-5 my-10">
+        <Typography className="text-center text-[#2D3142] font-[500] text-[16px] leading-[24px] px-5  mb-4 mt-2">
           Welcome. I’m Dr. Kim, here to guide you through your personalized
           heart health journey.
         </Typography>
@@ -23,7 +23,7 @@ export default function DoctorScreen({ onContinue }: DoctorScreenProps) {
           height="auto"
           width="auto"
         />
-        <Typography className="text-center text-[#7D8296] font-[400] text-[16px] leading-[24px] px-5 my-10">
+        <Typography className="text-center text-[#7D8296] font-[400] text-[16px] leading-[24px] px-5 ">
           Take 2 minutes to complete a quick quiz and get your custom plan.{" "}
         </Typography>
       </div>

@@ -90,7 +90,7 @@
     "continue": "Continue"
   },
   "SELECT_HEALTH_CONDITION": {
-    "title": "What’s Your Current Health Goal?",
+    "title": "Your Current Health Goal?",
     "options": [
       {
         "key": "icBloodPressure",
@@ -99,10 +99,6 @@
       {
         "key": "icHeartRate",
         "value": "Track heart rate & stress"
-      },
-      {
-        "key": "icSleep",
-        "value": "Sleep better"
       },
       {
         "key": "icNutrition",
