@@ -94,7 +94,7 @@ export function SelectWeightScreen(
         width: "100%",
         height: "100%",
       }}
-      className="justify-between items-center pb-8 overflow-y-auto overflow-x-hidden"
+      className="justify-between items-center pb-[10vh] overflow-y-auto overflow-x-hidden"
     >
       <div className="flex flex-col items-center justify-center">
         <span className="title-text">{props.config.title}</span>
@@ -125,13 +125,8 @@ export function SelectWeightScreen(
           pickerOrientation="horizontal"
         />
 
-        <div className="bg-white rounded-xl shadow p-4 flex flex-col items-center justify-center w-[80%] h-[40vh] mt-10 gap-8 mb-10">
+        <div className="bg-white rounded-xl shadow p-4 flex flex-col items-center justify-center w-[80%] h-[30vh] mt-10 gap-8 mb-10">
           <BMIResult w={weightInKg} h={heightInCm} />
-          <Typography className="text-start text-[#61697F] font-[400] text-[14px] leading-[20px]">
-            Your BMI is within a healthy range. Remember maintaining healthy
-            habits, including a balanced diet and exercise are important to
-            support your
-          </Typography>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Typography } from "antd";
 
 interface BMIResultProps {
   w: number; // weight in kg
@@ -6,10 +7,33 @@ interface BMIResultProps {
 }
 
 const bmiStatus = (bmi: number) => {
-  if (bmi < 18.5) return { label: "Underweight", color: "#36B6C6" };
-  if (bmi < 25) return { label: "Normal", color: "#4CAF50" };
-  if (bmi < 30) return { label: "Overweight", color: "#FBC02D" };
-  return { label: "Obese", color: "#E57373" };
+  if (bmi < 18.5)
+    return {
+      label: "Underweight",
+      color: "#36B6C6",
+      message:
+        "You're underweight. Focus on nutrient-rich foods and check in with a health expert to build up your strength.",
+    };
+  if (bmi < 25)
+    return {
+      label: "Normal",
+      color: "#4CAF50",
+      message:
+        "You're in a healthy range. Keep up your current habits with balanced meals and regular movement!",
+    };
+  if (bmi < 30)
+    return {
+      label: "Overweight",
+      color: "#FBC02D",
+      message:
+        "You're slightly over. Try more daily movement and mindful eating to work toward a healthier balance.",
+    };
+  return {
+    label: "Obese",
+    color: "#E57373",
+    message:
+      "Your BMI indicates obesity. Start with small lifestyle changes and talk to a professional for a safe, sustainable plan.",
+  };
 };
 
 export const BMIResult: React.FC<BMIResultProps> = ({ w, h }) => {
@@ -67,6 +91,9 @@ export const BMIResult: React.FC<BMIResultProps> = ({ w, h }) => {
           }}
         />
       </div>
+      <Typography className="text-start text-[#61697F] font-[400] text-[14px] leading-[20px] mt-4">
+        {status.message}
+      </Typography>
     </div>
   );
 };

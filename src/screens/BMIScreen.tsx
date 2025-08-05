@@ -184,10 +184,7 @@ export function BMIScreen(props: IBMIScreenProps): JSX.Element {
 
         <div className="flex flex-col items-center mb-8 bg-[#FFFFFF] mx-5 rounded-[16px] pb-4">
           <BMIResult w={weightInKg} h={heightInCm} />
-          <Typography className="text-center text-[#61697F] font-[400] text-[14px] leading-[20px] px-5 my-2">
-            Your BMI is within a healthy range. Remember maintaining healthy
-            habits.
-          </Typography>
+
           <div className="flex flex-col w-full px-5 gap-4">
             {userInfoDisplay.map((item, index) => (
               <div
