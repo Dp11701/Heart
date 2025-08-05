@@ -145,7 +145,7 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
         {/* Ruler ticks */}
         <div
           ref={scrollRef}
-          className="relative h-full overflow-y-scroll ml-4 ruler-scroll-container"
+          className="relative h-full overflow-y-scroll pl-4 ruler-scroll-container"
           style={{
             WebkitOverflowScrolling: "touch",
             scrollBehavior: "smooth",
@@ -165,28 +165,39 @@ export const VerticalRulerPicker: React.FC<VerticalRulerPickerProps> = ({
               willChange: "transform",
             }}
           >
-            {Array.from({ length: max - min + 1 }).map((_, i) => {
-              const val = max - i; // Đảo ngược: từ max xuống min
-              const isTenth = val % 10 === 0;
-              return (
-                <div
-                  key={val}
-                  className="flex items-center ruler-item"
-                  style={{ height: ITEM_HEIGHT, scrollSnapAlign: "start" }}
-                >
+            {[
+              ...Array.from({ length: 20 }).map((_, i) => (
+                <div key={`spacer-top-${i}`} style={{ height: ITEM_HEIGHT }} />
+              )),
+              ...Array.from({ length: max - min + 1 }).map((_, i) => {
+                const val = max - i;
+                const isTenth = val % 10 === 0;
+                return (
                   <div
-                    className={`${
-                      isTenth
-                        ? "h-[2px] w-12 bg-[#A5A6BC]"
-                        : "h-[1px] w-8 bg-[#A5A6BC]"
-                    }`}
-                  />
-                  {isTenth && (
-                    <div className="text-xs text-gray-400 ml-2">{val}</div>
-                  )}
-                </div>
-              );
-            })}
+                    key={val}
+                    className="flex items-center ruler-item"
+                    style={{ height: ITEM_HEIGHT, scrollSnapAlign: "start" }}
+                  >
+                    <div
+                      className={`${
+                        isTenth
+                          ? "h-[2px] w-12 bg-[#A5A6BC]"
+                          : "h-[1px] w-8 bg-[#A5A6BC]"
+                      }`}
+                    />
+                    {isTenth && (
+                      <div className="text-xs text-gray-400 ml-2">{val}</div>
+                    )}
+                  </div>
+                );
+              }),
+              ...Array.from({ length: 20 }).map((_, i) => (
+                <div
+                  key={`spacer-bottom-${i}`}
+                  style={{ height: ITEM_HEIGHT }}
+                />
+              )),
+            ]}
           </div>
         </div>
 

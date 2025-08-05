@@ -22,6 +22,7 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(value);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const PADDING_COUNT = 9;
 
   useEffect(() => {
     if (!scrollRef.current) return;
@@ -171,6 +172,16 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
                   : undefined,
             }}
           >
+            {/* Spacer đầu */}
+            {Array.from({ length: PADDING_COUNT }).map((_, i) => (
+              <div
+                key={`head-${i}`}
+                style={{
+                  width: orientation === "horizontal" ? ITEM_WIDTH : undefined,
+                  height: orientation === "vertical" ? ITEM_WIDTH : undefined,
+                }}
+              />
+            ))}
             {Array.from({ length: max - min + 1 }).map((_, i) => {
               const val = min + i;
               const isTenth = val % 10 === 0;
@@ -211,6 +222,16 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
                 </div>
               );
             })}
+            {/* Spacer cuối */}
+            {Array.from({ length: PADDING_COUNT }).map((_, i) => (
+              <div
+                key={`tail-${i}`}
+                style={{
+                  width: orientation === "horizontal" ? ITEM_WIDTH : undefined,
+                  height: orientation === "vertical" ? ITEM_WIDTH : undefined,
+                }}
+              />
+            ))}
           </div>
         </div>
       </div>
