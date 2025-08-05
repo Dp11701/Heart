@@ -152,6 +152,12 @@ export function IAPPricesView(props: { config: IAPConfig }) {
         config={props.config}
         selectedPackIndex={selectedPackIndex}
       />
+      <Typography className="text-center text-[#4E5660] font-[400] text-[12px] leading-[24px]">
+        Only $6.99/week after trial.
+      </Typography>
+      <Typography className="text-center text-[#000000] font-[400] text-[12px] leading-[24px]">
+        Money-back guarantee. Cancel anytime
+      </Typography>
       <span
         style={{
           fontSize: 15,

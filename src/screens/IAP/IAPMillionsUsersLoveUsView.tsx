@@ -21,15 +21,15 @@ function CommentView(props: CommentViewProps) {
   return (
     <div
       style={{
-        position: "relative",
         display: "flex",
         flexDirection: "column",
         backgroundColor: "white",
         border: "2px solid #E3E1E1",
         borderRadius: 20,
         gap: 12,
+        minWidth: 334,
       }}
-      className="w-full px-6 py-4 justify-between"
+      className="w-full px-2 py-4 justify-between"
     >
       <div className="flex flex-col gap-2">
         <div
@@ -38,7 +38,7 @@ function CommentView(props: CommentViewProps) {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            width: 312,
+            width: 320,
           }}
         >
           <span style={{ fontSize: 20, fontWeight: 600, textAlign: "start" }}>
@@ -77,7 +77,7 @@ function CommentView(props: CommentViewProps) {
           fontSize: 14,
           color: "#2D3142",
         }}
-      >{`-${props.comment.author}, ${props.comment.time}`}</span>
+      >{`- ${props.comment.author}, ${props.comment.time}`}</span>
     </div>
   );
 }
@@ -92,12 +92,13 @@ export function IAPMillionsUsersLoveUsView(props: { config: IAPConfig }) {
         gap: 20,
       }}
     >
-      <h2
+      <span
         style={{
           textAlign: "start",
           margin: "0px 24px",
           marginTop: 24,
         }}
+        className="text-[23px] leading-[32px] font-bold text-[#2D3142]"
       >
         {parts[0]}
         {
@@ -106,7 +107,7 @@ export function IAPMillionsUsersLoveUsView(props: { config: IAPConfig }) {
           </span>
         }
         {parts[1]}
-      </h2>
+      </span>
 
       <div
         style={{

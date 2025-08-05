@@ -65,15 +65,15 @@
     "units": [
       {
         "unit": "cm",
-        "min": 120,
+        "min": 20,
         "max": 260,
-        "ideal": 30
+        "ideal": 150
       },
       {
-        "unit": "ft",
-        "min": 4,
-        "max": 9,
-        "ideal": 5.8
+        "unit": "ft/in",
+        "min": 0,
+        "max": 180,
+        "ideal": 60
       }
     ]
   },

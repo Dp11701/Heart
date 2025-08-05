@@ -65,15 +65,15 @@
     "units": [
       {
         "unit": "cm",
-        "min": 120,
+        "min": 20,
         "max": 260,
-        "ideal": 30
+        "ideal": 150
       },
       {
-        "unit": "ft",
-        "min": 4,
-        "max": 9,
-        "ideal": 5.8
+        "unit": "ft/in",
+        "min": 0,
+        "max": 180,
+        "ideal": 60
       }
     ]
   },
@@ -92,7 +92,9 @@
   "SELECT_CHOLESTEROL": {
     "title": "Har du højt kolesterol?",
     "options": [
-      "Ja", "Nej", "Jeg ved det ikke"
+      "Ja",
+      "Nej",
+      "Jeg ved det ikke"
     ]
   },
   "SELECT_BLOOD_PRESSURE": {
@@ -108,13 +110,16 @@
   "SELECT_HYPERTENSION": {
     "title": "Har du forhøjet blodtryk?",
     "options": [
-      "Ja", "Nej", "Jeg ved det ikke"
+      "Ja",
+      "Nej",
+      "Jeg ved det ikke"
     ]
   },
   "SELECT_HIGH_BLOOD_PRESSURE": {
     "title": "Tager du medicin for højt blodtryk?",
     "options": [
-      "Ja", "Nej"
+      "Ja",
+      "Nej"
     ]
   },
   "SELECT_ACTIVITY_LEVEL": {

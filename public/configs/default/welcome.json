@@ -24,7 +24,6 @@
     "male": "Male",
     "female": "Female",
     "preferNotToSay": "Prefer not to say"
-
   },
   "SELECT_AGE": {
     "title": "What is Your Age",
@@ -66,15 +65,15 @@
     "units": [
       {
         "unit": "cm",
-        "min": 120,
+        "min": 20,
         "max": 260,
-        "ideal": 30
+        "ideal": 150
       },
       {
-        "unit": "ft",
-        "min": 4,
-        "max": 9,
-        "ideal": 5.8
+        "unit": "ft/in",
+        "min": 0,
+        "max": 180,
+        "ideal": 60
       }
     ]
   },
@@ -93,7 +92,9 @@
   "SELECT_CHOLESTEROL": {
     "title": "Do you have high Cholesterol?",
     "options": [
-      "Yes", "No", "I don't know"
+      "Yes",
+      "No",
+      "I don't know"
     ]
   },
   "SELECT_BLOOD_PRESSURE": {
@@ -109,13 +110,16 @@
   "SELECT_HYPERTENSION": {
     "title": "Do you have hypertension?",
     "options": [
-      "Yes", "No", "I don't know"
+      "Yes",
+      "No",
+      "I don't know"
     ]
   },
   "SELECT_HIGH_BLOOD_PRESSURE": {
     "title": "Do you take medication for high blood pressure?",
     "options": [
-      "Yes", "No"
+      "Yes",
+      "No"
     ]
   },
   "SELECT_ACTIVITY_LEVEL": {
