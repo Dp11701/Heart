@@ -171,15 +171,7 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
             }}
           >
             {/* Spacer đầu */}
-            {Array.from({ length: PADDING_COUNT }).map((_, i) => (
-              <div
-                key={`head-${i}`}
-                style={{
-                  width: orientation === "horizontal" ? ITEM_WIDTH : undefined,
-                  height: orientation === "vertical" ? ITEM_WIDTH : undefined,
-                }}
-              />
-            ))}
+
             {Array.from({ length: max - min + 1 }).map((_, i) => {
               const val = min + i;
               const isTenth = val % 10 === 0;
@@ -221,15 +213,6 @@ export const RulerPicker: React.FC<RulerPickerProps> = ({
               );
             })}
             {/* Spacer cuối */}
-            {Array.from({ length: PADDING_COUNT }).map((_, i) => (
-              <div
-                key={`tail-${i}`}
-                style={{
-                  width: orientation === "horizontal" ? ITEM_WIDTH : undefined,
-                  height: orientation === "vertical" ? ITEM_WIDTH : undefined,
-                }}
-              />
-            ))}
           </div>
         </div>
       </div>
