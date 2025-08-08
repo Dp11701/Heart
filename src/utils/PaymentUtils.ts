@@ -7,7 +7,7 @@ export class PaymentUtils {
       payload: {
         items: [
           {
-            price: "price_1RthnMBr1UV8uwmNJ97MZdL0",
+            price: "price_1Rtht3Br1UV8uwmNBXUFmbr2",
             quantity: 1,
           },
         ],
